@@ -1,561 +1,1032 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ExDev | We Build Systems That Execute</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExDev Agency — We Build Systems That Execute</title>
+    <meta name="description" content="ExDev Agency delivers high-performance web development, mobile apps, AI systems, and backend infrastructure.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           CSS CUSTOM PROPERTIES (DESIGN TOKENS)
+        ============================================ */
+        :root {
+            --bg-void: #0B0B0F;
+            --bg-surface: #111118;
+            --bg-elevated: #1A1A24;
+            --accent: #00FF9C;
+            --accent-dim: rgba(0, 255, 156, 0.15);
+            --accent-glow: rgba(0, 255, 156, 0.4);
+            --text-primary: #FFFFFF;
+            --text-secondary: #A1A1AA;
+            --border: #1F1F2E;
+            --error: #FF4757;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition-fast: 0.2s ease;
+            --transition-base: 0.3s ease;
+        }
 
-    :root {
-      --bg: #0B0B0F;
-      --bg-card: #131318;
-      --accent: #00FF9C;
-      --accent-dim: rgba(0, 255, 156, 0.15);
-      --text: #FFFFFF;
-      --text-muted: #A1A1AA;
-      --border: #27272A;
-      --radius: 12px;
-      --radius-lg: 20px;
-    }
+        /* ============================================
+           RESET & BASE
+        ============================================ */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    html {
-      scroll-behavior: smooth;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+        body {
+            font-family: var(--font-body);
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-void);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+        img, svg {
+            display: block;
+            max-width: 100%;
+        }
 
-    /* Hero */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      position: relative;
-      background: 
-        radial-gradient(ellipse 80% 50% at 50% -20%, var(--accent-dim), transparent),
-        radial-gradient(circle at 20% 80%, rgba(0, 255, 156, 0.05), transparent 40%),
-        radial-gradient(circle at 80% 20%, rgba(0, 255, 156, 0.03), transparent 30%);
-    }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
 
-    .hero-content {
-      position: relative;
-      z-index: 2;
-    }
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
 
-    .logo {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(3rem, 10vw, 6rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+        /* ============================================
+           UTILITIES
+        ============================================ */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    .hero-subtitle {
-      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-      color: var(--text-muted);
-      font-weight: 400;
-      margin-bottom: 40px;
-      letter-spacing: 0.05em;
-    }
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 40px;
+            }
+        }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px 32px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1rem;
-      font-weight: 600;
-      border: none;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
+        .section {
+            padding: 64px 0;
+        }
 
-    .btn-primary {
-      background: var(--accent);
-      color: var(--bg);
-    }
+        @media (min-width: 768px) {
+            .section {
+                padding: 96px 0;
+            }
+        }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 30px rgba(0, 255, 156, 0.4);
-    }
+        .section-label {
+            font-family: var(--font-heading);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
 
-    .btn-primary:active {
-      transform: translateY(0);
-    }
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
 
-    /* Services */
-    .services {
-      padding: 100px 0;
-      position: relative;
-    }
+        @media (min-width: 768px) {
+            .section-title {
+                font-size: 40px;
+            }
+        }
 
-    .section-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 600;
-      text-align: center;
-      margin-bottom: 60px;
-    }
+        /* ============================================
+           NEON X LOGO (CSS ONLY)
+        ============================================ */
+        .neon-x {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 32px;
+        }
 
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
+        @media (min-width: 768px) {
+            .neon-x {
+                width: 160px;
+                height: 160px;
+                margin-bottom: 48px;
+            }
+        }
 
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 40px 32px;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
+        .neon-x::before,
+        .neon-x::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 70%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            box-shadow: 0 0 20px var(--accent-glow), 0 0 40px var(--accent-dim);
+            transform-origin: center;
+        }
 
-    .card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: var(--radius-lg);
-      padding: 1px;
-      background: linear-gradient(135deg, var(--accent-dim), transparent 50%);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
+        .neon-x::before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
 
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
+        .neon-x::after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
 
-    .card:hover::before {
-      opacity: 1;
-    }
+        .neon-x-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50%;
+            height: 2px;
+            background: var(--accent);
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px var(--accent);
+        }
 
-    .card-icon {
-      width: 48px;
-      height: 48px;
-      background: var(--accent-dim);
-      border-radius: var(--radius);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      color: var(--accent);
-      font-size: 1.5rem;
-    }
+        .neon-x-corner {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: 2px solid var(--accent);
+            opacity: 0.6;
+        }
 
-    .card-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
+        .neon-x-corner:nth-child(1) { top: 0; left: 0; border-right: none; border-bottom: none; }
+        .neon-x-corner:nth-child(2) { top: 0; right: 0; border-left: none; border-bottom: none; }
+        .neon-x-corner:nth-child(3) { bottom: 0; left: 0; border-right: none; border-top: none; }
+        .neon-x-corner:nth-child(4) { bottom: 0; right: 0; border-left: none; border-top: none; }
 
-    .card-desc {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
+        /* ============================================
+           HEADER
+        ============================================ */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 0;
+            background: rgba(11, 11, 15, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
 
-    /* Contact */
-    .contact {
-      padding: 100px 0;
-      background: 
-        radial-gradient(ellipse 60% 40% at 50% 100%, var(--accent-dim), transparent);
-    }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    .contact-form-wrapper {
-      max-width: 560px;
-      margin: 0 auto;
-    }
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
 
-    .form {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+        .logo span {
+            color: var(--accent);
+        }
 
-    .form-group {
-      position: relative;
-    }
+        .nav-link {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color var(--transition-fast);
+        }
 
-    .form-label {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-      letter-spacing: 0.02em;
-    }
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
 
-    .form-input,
-    .form-select,
-    .form-textarea {
-      width: 100%;
-      padding: 16px 20px;
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      color: var(--text);
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      transition: all 0.3s ease;
-      outline: none;
-    }
+        /* ============================================
+           HERO SECTION
+        ============================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .form-input::placeholder,
-    .form-textarea::placeholder {
-      color: var(--text-muted);
-      opacity: 0.6;
-    }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
+            opacity: 0.5;
+            pointer-events: none;
+        }
 
-    .form-input:focus,
-    .form-select:focus,
-    .form-textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-dim);
-    }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
 
-    .form-input.error,
-    .form-select.error,
-    .form-textarea.error {
-      border-color: #ff4757;
-      box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.15);
-    }
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
 
-    .form-select {
-      cursor: pointer;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23A1A1AA' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 16px center;
-    }
+        @media (min-width: 768px) {
+            .hero-title {
+                font-size: 56px;
+            }
+        }
 
-    .form-select option {
-      background: var(--bg-card);
-      color: var(--text);
-    }
+        @media (min-width: 1024px) {
+            .hero-title {
+                font-size: 72px;
+            }
+        }
 
-    .form-textarea {
-      min-height: 140px;
-      resize: vertical;
-    }
+        .hero-title .accent {
+            color: var(--accent);
+            text-shadow: 0 0 30px var(--accent-glow);
+        }
 
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
+        .hero-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 480px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
 
-    .error-message {
-      font-size: 0.8rem;
-      color: #ff4757;
-      margin-top: 6px;
-      display: none;
-    }
+        @media (min-width: 768px) {
+            .hero-subtitle {
+                font-size: 18px;
+            }
+        }
 
-    .error-message.show {
-      display: block;
-    }
+        /* ============================================
+           BUTTON
+        ============================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            font-family: var(--font-heading);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            border: 2px solid var(--accent);
+            background: transparent;
+            color: var(--accent);
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
 
-    .btn-submit {
-      width: 100%;
-      padding: 18px 32px;
-      font-size: 1.1rem;
-      margin-top: 12px;
-    }
+        .btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform var(--transition-base);
+            z-index: -1;
+        }
 
-    .btn-submit:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+        .btn:hover::before {
+            transform: scaleX(1);
+        }
 
-    /* Success */
-    .success-message {
-      display: none;
-      text-align: center;
-      padding: 60px 40px;
-    }
+        .btn:hover {
+            color: var(--bg-void);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
 
-    .success-message.show {
-      display: block;
-    }
+        .btn:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px var(--accent-dim), 0 0 30px var(--accent-glow);
+        }
 
-    .success-icon {
-      width: 80px;
-      height: 80px;
-      background: var(--accent-dim);
-      border: 2px solid var(--accent);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 24px;
-      color: var(--accent);
-      font-size: 2.5rem;
-    }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
 
-    .success-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
+        .btn:disabled:hover::before {
+            transform: scaleX(0);
+        }
 
-    .success-text {
-      color: var(--text-muted);
-      margin-bottom: 32px;
-    }
+        .btn:disabled:hover {
+            color: var(--accent);
+            box-shadow: none;
+        }
 
-    /* Responsive */
-    @media (max-width: 640px) {
-      .form-row {
-        grid-template-columns: 1fr;
-      }
+        .btn .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top-color: currentColor;
+            animation: spin 0.8s linear infinite;
+        }
 
-      .services {
-        padding: 80px 0;
-      }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
 
-      .contact {
-        padding: 80px 0;
-      }
-    }
-  </style>
+        /* ============================================
+           SERVICES SECTION
+        ============================================ */
+        .services-grid {
+            display: grid;
+            gap: 16px;
+            margin-top: 48px;
+        }
+
+        @media (min-width: 768px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .service-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            padding: 32px 24px;
+            transition: all var(--transition-base);
+            position: relative;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border: 1px solid var(--accent);
+            opacity: 0;
+            transition: opacity var(--transition-base);
+        }
+
+        .service-card:hover {
+            box-shadow: 0 0 40px var(--accent-dim);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            color: var(--accent);
+        }
+
+        .service-title {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .service-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           METRICS SECTION
+        ============================================ */
+        .metrics {
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .metrics-grid {
+            display: grid;
+            gap: 32px;
+        }
+
+        @media (min-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 64px;
+            }
+        }
+
+        .metric-item {
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .metric-item {
+                text-align: left;
+            }
+        }
+
+        .metric-value {
+            font-family: var(--font-heading);
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .metric-value {
+                font-size: 64px;
+            }
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* ============================================
+           CONTACT SECTION
+        ============================================ */
+        .contact-wrapper {
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 32px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 16px 0;
+            font-family: var(--font-body);
+            font-size: 16px;
+            color: var(--text-primary);
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--border);
+            outline: none;
+            transition: border-color var(--transition-fast);
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .form-input.error,
+        .form-select.error,
+        .form-textarea.error {
+            border-color: var(--error);
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A1A1AA' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0 center;
+        }
+
+        .form-select option {
+            background: var(--bg-surface);
+            color: var(--text-primary);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-label {
+            position: absolute;
+            left: 0;
+            top: 16px;
+            font-size: 16px;
+            color: var(--text-secondary);
+            pointer-events: none;
+            transition: all var(--transition-fast);
+        }
+
+        .form-input:focus ~ .form-label,
+        .form-input:not(:placeholder-shown) ~ .form-label,
+        .form-select:focus ~ .form-label,
+        .form-select:valid ~ .form-label,
+        .form-textarea:focus ~ .form-label,
+        .form-textarea:not(:placeholder-shown) ~ .form-label {
+            top: -8px;
+            font-size: 11px;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+        }
+
+        .form-input.error ~ .form-label,
+        .form-select.error ~ .form-label,
+        .form-textarea.error ~ .form-label {
+            color: var(--error);
+        }
+
+        .form-error {
+            font-size: 12px;
+            color: var(--error);
+            margin-top: 8px;
+            display: none;
+        }
+
+        .form-error.visible {
+            display: block;
+        }
+
+        .form-row {
+            display: grid;
+            gap: 24px;
+        }
+
+        @media (min-width: 480px) {
+            .form-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ============================================
+           SUCCESS STATE
+        ============================================ */
+        .success-state {
+            display: none;
+            text-align: center;
+            padding: 64px 24px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .success-state.visible {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-icon::after {
+            content: '';
+            width: 32px;
+            height: 16px;
+            border-left: 3px solid var(--accent);
+            border-bottom: 3px solid var(--accent);
+            transform: rotate(-45deg) translateY(-4px);
+        }
+
+        .success-title {
+            font-family: var(--font-heading);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .success-text {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        /* ============================================
+           FOOTER CTA
+        ============================================ */
+        .footer-cta {
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-cta .section-title {
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-link {
+            font-size: 13px;
+            color: var(--text-secondary);
+            transition: color var(--transition-fast);
+        }
+
+        .footer-link:hover {
+            color: var(--accent);
+        }
+
+        .footer-copy {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 24px;
+            padding-bottom: 32px;
+        }
+
+        /* ============================================
+           ACCESSIBILITY
+        ============================================ */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        *:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+    </style>
 </head>
 <body>
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <h1 class="logo">ExDev</h1>
-        <p class="hero-subtitle">We Build Systems That Execute</p>
-        <a href="#contact" class="btn btn-primary">Start Project</a>
-      </div>
-    </div>
-  </section>
+    <!-- ============================================
+         HEADER
+    ============================================ -->
+    <header class="header">
+        <div class="container header-inner">
+            <a href="#" class="logo">Ex<span>Dev</span></a>
+            <nav>
+                <a href="#services" class="nav-link">Services</a>
+            </nav>
+        </div>
+    </header>
 
-  <section class="services" id="services">
-    <div class="container">
-      <h2 class="section-title">Services</h2>
-      <div class="services-grid">
-        <div class="card">
-          <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-          </div>
-          <h3 class="card-title">Web Development</h3>
-          <p class="card-desc">Modern, performant websites and web applications built with cutting-edge technologies.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10H12V2z"></path><path d="M12 2a10 10 0 0 1 10 10"></path></svg>
-          </div>
-          <h3 class="card-title">AI Automation</h3>
-          <p class="card-desc">Intelligent automation solutions that streamline workflows and enhance productivity.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-          </div>
-          <h3 class="card-title">Backend Systems</h3>
-          <p class="card-desc">Scalable server architecture and APIs designed for reliability and performance.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="contact" id="contact">
-    <div class="container">
-      <h2 class="section-title">Let's Work Together</h2>
-      <div class="contact-form-wrapper">
-        <form class="form" id="contactForm" novalidate>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="name">Full Name</label>
-              <input type="text" class="form-input" id="name" name="name" placeholder="John Doe" required>
-              <p class="error-message" id="nameError">Please enter your name</p>
+    <!-- ============================================
+         HERO SECTION
+    ============================================ -->
+    <section class="hero section" id="hero">
+        <div class="container hero-content">
+            <div class="neon-x" aria-hidden="true">
+                <span class="neon-x-corner"></span>
+                <span class="neon-x-corner"></span>
+                <span class="neon-x-corner"></span>
+                <span class="neon-x-corner"></span>
+                <span class="neon-x-inner"></span>
             </div>
-            <div class="form-group">
-              <label class="form-label" for="email">Email Address</label>
-              <input type="email" class="form-input" id="email" name="email" placeholder="john@example.com" required>
-              <p class="error-message" id="emailError">Please enter a valid email</p>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="type">Project Type</label>
-            <select class="form-select" id="type" name="type" required>
-              <option value="" disabled selected>Select project type</option>
-              <option value="web">Web Development</option>
-              <option value="mobile">Mobile App</option>
-              <option value="ai">AI Automation</option>
-              <option value="other">Other</option>
-            </select>
-            <p class="error-message" id="typeError">Please select a project type</p>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="message">Message</label>
-            <textarea class="form-textarea" id="message" name="message" placeholder="Tell us about your project..." required></textarea>
-            <p class="error-message" id="messageError">Please enter a message</p>
-          </div>
-          <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">Submit Request</button>
-        </form>
-        <div class="success-message" id="successMessage">
-          <div class="success-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </div>
-          <h3 class="success-title">Request submitted successfully</h3>
-          <p class="success-text">We'll be in touch within 24 hours.</p>
-          <button type="button" class="btn btn-primary" id="resetBtn">Send Another</button>
+            <h1 class="hero-title">
+                We Build Systems<br>That <span class="accent">Execute</span>
+            </h1>
+            <p class="hero-subtitle">
+                High-performance infrastructure, intelligent interfaces, and backend architecture that scales without compromise.
+            </p>
+            <a href="#contact" class="btn">Start a Project</a>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <script>
-    (function() {
-      const form = document.getElementById('contactForm');
-      const successMessage = document.getElementById('successMessage');
-      const submitBtn = document.getElementById('submitBtn');
-      const resetBtn = document.getElementById('resetBtn');
+    <!-- ============================================
+         SERVICES SECTION
+    ============================================ -->
+    <section class="section" id="services">
+        <div class="container">
+            <p class="section-label">Capabilities</p>
+            <h2 class="section-title">Full-Stack Engineering</h2>
+            <div class="services-grid">
+                <article class="service-card">
+                    <div class="service-icon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18"/>
+                            <path d="M3 9h18M9 21V9"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Web Development</h3>
+                    <p class="service-desc">React, Next.js, Vue. Performance-obsessed builds with sub-second load times.</p>
+                </article>
+                <article class="service-card">
+                    <div class="service-icon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="5" y="2" width="14" height="20"/>
+                            <path d="M12 18h.01"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Mobile Apps</h3>
+                    <p class="service-desc">React Native, Flutter. Native experiences with shared codebases.</p>
+                </article>
+                <article class="service-card">
+                    <div class="service-icon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">AI Systems</h3>
+                    <p class="service-desc">ML pipelines, LLM integration, intelligent automation at scale.</p>
+                </article>
+                <article class="service-card">
+                    <div class="service-icon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="2" y="2" width="20" height="8"/>
+                            <rect x="2" y="14" width="20" height="8"/>
+                            <path d="M6 6h.01M6 18h.01"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Backend Infrastructure</h3>
+                    <p class="service-desc">Node.js, Go, PostgreSQL. Distributed systems with 99.9% uptime.</p>
+                </article>
+            </div>
+        </div>
+    </section>
 
-      const fields = {
-        name: {
-          element: document.getElementById('name'),
-          errorElement: document.getElementById('nameError'),
-          validate: (value) => value.trim().length > 0
-        },
-        email: {
-          element: document.getElementById('email'),
-          errorElement: document.getElementById('emailError'),
-          validate: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-        },
-        type: {
-          element: document.getElementById('type'),
-          errorElement: document.getElementById('typeError'),
-          validate: (value) => value && value.length > 0
-        },
-        message: {
-          element: document.getElementById('message'),
-          errorElement: document.getElementById('messageError'),
-          validate: (value) => value.trim().length > 0
-        }
-      };
+    <!-- ============================================
+         METRICS SECTION
+    ============================================ -->
+    <section class="section metrics">
+        <div class="container">
+            <div class="metrics-grid">
+                <div class="metric-item">
+                    <p class="metric-value">99.9%</p>
+                    <p class="metric-label">SLA Guarantee</p>
+                </div>
+                <div class="metric-item">
+                    <p class="metric-value">2x</p>
+                    <p class="metric-label">Deployment Speed</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      function showError(field) {
-        field.element.classList.add('error');
-        field.errorElement.classList.add('show');
-      }
+    <!-- ============================================
+         CONTACT SECTION
+    ============================================ -->
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="contact-wrapper">
+                <p class="section-label">Get Started</p>
+                <h2 class="section-title">Tell Us About Your Project</h2>
+                
+                <form id="project-form" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" class="form-input" placeholder=" " required autocomplete="name">
+                            <label for="name" class="form-label">Name</label>
+                            <p class="form-error" id="name-error">Please enter your name</p>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" class="form-input" placeholder=" " required autocomplete="email">
+                            <label for="email" class="form-label">Email</label>
+                            <p class="form-error" id="email-error">Please enter a valid email</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <select id="service" name="service" class="form-select" required>
+                            <option value="" disabled selected></option>
+                            <option value="web">Web Development</option>
+                            <option value="mobile">Mobile Apps</option>
+                            <option value="ai">AI Systems</option>
+                            <option value="backend">Backend Infrastructure</option>
+                        </select>
+                        <label for="service" class="form-label">Service Interest</label>
+                        <p class="form-error" id="service-error">Please select a service</p>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" class="form-textarea" placeholder=" " rows="4" required></textarea>
+                        <label for="message" class="form-label">Project Details</label>
+                        <p class="form-error" id="message-error">Please describe your project</p>
+                    </div>
+                    <button type="submit" class="btn" id="submit-btn">
+                        <span class="btn-text">Send Inquiry</span>
+                    </button>
+                </form>
 
-      function clearError(field) {
-        field.element.classList.remove('error');
-        field.errorElement.classList.remove('show');
-      }
+                <div class="success-state" id="success-state">
+                    <div class="success-icon" aria-hidden="true"></div>
+                    <h3 class="success-title">Message Received</h3>
+                    <p class="success-text">We'll review your project and respond within 24 hours.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      function validateField(fieldName) {
-        const field = fields[fieldName];
-        const isValid = field.validate(field.element.value);
+    <!-- ============================================
+         FOOTER
+    ============================================ -->
+    <footer class="section footer-cta">
+        <div class="container">
+            <h2 class="section-title">Ready to Build Something<br>Exceptional?</h2>
+            <a href="mailto:hello@exdev.io" class="btn">hello@exdev.io</a>
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="#services" class="footer-link">Services</a>
+                <a href="#contact" class="footer-link">Contact</a>
+                <a href="#" class="footer-link">Privacy</a>
+            </nav>
+            <p class="footer-copy">&copy; 2026 ExDev Agency. All rights reserved.</p>
+        </div>
+    </footer>
 
-        if (!isValid) {
-          showError(field);
-        } else {
-          clearError(field);
-        }
+    <!-- ============================================
+         JAVASCRIPT
+    ============================================ -->
+    <script>
+        (function() {
+            'use strict';
 
-        return isValid;
-      }
+            const form = document.getElementById('project-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const successState = document.getElementById('success-state');
 
-      Object.keys(fields).forEach(fieldName => {
-        const field = fields[fieldName];
-        field.element.addEventListener('blur', () => validateField(fieldName));
-        field.element.addEventListener('input', () => {
-          if (field.element.classList.contains('error')) {
-            validateField(fieldName);
-          }
-        });
-      });
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-      function handleSubmit(e) {
-        e.preventDefault();
+            const fields = {
+                name: {
+                    element: document.getElementById('name'),
+                    error: document.getElementById('name-error'),
+                    validate: (value) => value.trim().length >= 2
+                },
+                email: {
+                    element: document.getElementById('email'),
+                    error: document.getElementById('email-error'),
+                    validate: (value) => emailPattern.test(value.trim())
+                },
+                service: {
+                    element: document.getElementById('service'),
+                    error: document.getElementById('service-error'),
+                    validate: (value) => value !== ''
+                },
+                message: {
+                    element: document.getElementById('message'),
+                    error: document.getElementById('message-error'),
+                    validate: (value) => value.trim().length >= 10
+                }
+            };
 
-        let isValid = true;
-        Object.keys(fields).forEach(fieldName => {
-          if (!validateField(fieldName)) {
-            isValid = false;
-          }
-        });
+            function validateField(name) {
+                const field = fields[name];
+                const isValid = field.validate(field.element.value);
+                
+                field.element.classList.toggle('error', !isValid);
+                field.error.classList.toggle('visible', !isValid);
+                
+                return isValid;
+            }
 
-        if (!isValid) {
-          return;
-        }
+            function validateForm() {
+                let isValid = true;
+                for (const name in fields) {
+                    if (!validateField(name)) {
+                        isValid = false;
+                    }
+                }
+                return isValid;
+            }
 
-        const data = {
-          name: fields.name.element.value.trim(),
-          email: fields.email.element.value.trim(),
-          type: fields.type.element.value,
-          message: fields.message.element.value.trim()
-        };
+            function handleInput(e) {
+                const name = e.target.name;
+                if (fields[name]) {
+                    fields[name].element.classList.remove('error');
+                    fields[name].error.classList.remove('visible');
+                }
+            }
 
-        console.log('Form Data:', data);
+            async function simulateSubmit() {
+                return new Promise((resolve) => {
+                    setTimeout(resolve, 1500);
+                });
+            }
 
-        // Placeholder for API integration
-        // fetch('/api/contact', { method: 'POST', body: JSON.stringify(data) })
-        //   .then(response => response.json())
-        //   .then(result => showSuccessMessage())
-        //   .catch(error => console.error('Error:', error));
+            function setLoading(isLoading) {
+                submitBtn.disabled = isLoading;
+                btnText.textContent = isLoading ? 'Sending...' : 'Send Inquiry';
+                
+                if (isLoading) {
+                    const spinner = document.createElement('span');
+                    spinner.className = 'spinner';
+                    spinner.setAttribute('aria-hidden', 'true');
+                    submitBtn.insertBefore(spinner, btnText);
+                } else {
+                    const spinner = submitBtn.querySelector('.spinner');
+                    if (spinner) spinner.remove();
+                }
+            }
 
-        showSuccessMessage();
-      }
+            function showSuccess() {
+                form.style.display = 'none';
+                successState.classList.add('visible');
+                successState.setAttribute('aria-hidden', 'false');
+                
+                successState.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }
 
-      function showSuccessMessage() {
-        form.style.display = 'none';
-        successMessage.classList.add('show');
-      }
+            async function handleSubmit(e) {
+                e.preventDefault();
 
-      function resetForm() {
-        form.reset();
-        Object.keys(fields).forEach(fieldName => {
-          clearError(fields[fieldName]);
-        });
-        successMessage.classList.remove('show');
-        form.style.display = 'flex';
-      }
+                if (!validateForm()) {
+                    const firstError = form.querySelector('.error');
+                    if (firstError) {
+                        firstError.focus();
+                    }
+                    return;
+                }
 
-      form.addEventListener('submit', handleSubmit);
-      resetBtn.addEventListener('click', resetForm);
-    })();
-  </script>
+                setLoading(true);
+
+                try {
+                    await simulateSubmit();
+                    showSuccess();
+                } catch (error) {
+                    console.error('Submission failed:', error);
+                    setLoading(false);
+                }
+            }
+
+            form.addEventListener('submit', handleSubmit);
+
+            Object.values(fields).forEach(field => {
+                field.element.addEventListener('input', handleInput);
+                field.element.addEventListener('blur', (e) => {
+                    if (e.target.value) {
+                        validateField(e.target.name);
+                    }
+                });
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+        })();
+    </script>
 </body>
 </html>
