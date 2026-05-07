@@ -1,6 +1,0 @@
-node_modules/
-.playwright/
-.cache/
-*.log
-.env
-.env.*
