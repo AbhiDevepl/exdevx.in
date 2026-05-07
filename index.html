@@ -74,28 +74,31 @@
   --head: 'Syne', sans-serif;
   --body: 'DM Sans', sans-serif;
   --ease: cubic-bezier(0.4,0,0.2,1);
+  --nav-z: 100;
+  --hamburger-z: 110;
+  --overlay-z: 98;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--body);
-  font-size: 15px;
+  font-size: clamp(14px, 1.1vw, 16px);
   line-height: 1.65;
   color: var(--text);
   background: var(--void);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
-img, svg { display: block; max-width: 100%; }
+img, svg { display: block; max-width: 100%; height: auto; }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
-/* GRID TEXTURE */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: 
+  background-image:
     linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
   background-size: 48px 48px;
@@ -107,18 +110,16 @@ body::before {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 clamp(16px, 3vw, 48px);
   position: relative;
   z-index: 1;
 }
-@media (min-width: 768px) { .container { padding: 0 48px; } }
 
-.section { padding: 80px 0; }
-@media (min-width: 768px) { .section { padding: 120px 0; } }
+.section { padding: clamp(60px, 10vw, 120px) 0; }
 
 .label {
   font-family: var(--head);
-  font-size: 10px;
+  font-size: clamp(9px, 0.8vw, 11px);
   font-weight: 700;
   letter-spacing: 0.25em;
   text-transform: uppercase;
@@ -134,21 +135,22 @@ body::before {
   height: 1px;
   background: var(--accent);
   display: inline-block;
+  flex-shrink: 0;
 }
 
 .section-title {
   font-family: var(--head);
-  font-size: 32px;
+  font-size: clamp(26px, 4.5vw, 44px);
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.12;
   letter-spacing: -0.03em;
-  margin-bottom: 20px;
+  margin-bottom: clamp(14px, 2vw, 24px);
+  overflow-wrap: break-word;
 }
-@media (min-width: 768px) { .section-title { font-size: 44px; } }
 
 .section-sub {
   color: var(--muted);
-  font-size: 15px;
+  font-size: clamp(14px, 1.1vw, 16px);
   max-width: 560px;
   line-height: 1.75;
   font-weight: 300;
@@ -158,8 +160,7 @@ body::before {
 .header {
   position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 100;
-  padding: 0;
+  z-index: var(--nav-z);
   background: rgba(8,8,16,0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -175,6 +176,7 @@ body::before {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
 }
 .logo-img {
   width: 32px;
@@ -184,45 +186,139 @@ body::before {
 }
 .logo-name {
   font-family: var(--head);
-  font-size: 17px;
+  font-size: clamp(15px, 1.5vw, 18px);
   font-weight: 800;
   letter-spacing: -0.04em;
+  white-space: nowrap;
 }
 .logo-name span { color: var(--accent); }
+
+/* Nav */
 .nav {
-  display: none;
+  display: flex;
   align-items: center;
   gap: 28px;
 }
-@media (min-width: 640px) { .nav { display: flex; } }
+@media (max-width: 639px) { .nav { display: none; } }
 .nav-link {
-  font-size: 13px;
+  font-size: clamp(12px, 0.95vw, 14px);
   font-weight: 500;
   color: var(--muted);
   transition: color 0.2s;
   letter-spacing: 0.01em;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
 }
 .nav-link:hover { color: var(--text); }
+
+/* Nav CTA */
 .nav-cta {
   display: none;
   align-items: center;
   gap: 8px;
   padding: 8px 18px;
   font-family: var(--head);
-  font-size: 12px;
+  font-size: clamp(11px, 0.85vw, 13px);
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--void);
   background: var(--accent);
   transition: opacity 0.2s;
+  min-height: 36px;
+  flex-shrink: 0;
 }
 @media (min-width: 900px) { .nav-cta { display: flex; } }
 .nav-cta:hover { opacity: 0.85; }
 
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  padding: 10px;
+  z-index: var(--hamburger-z);
+  position: relative;
+  flex-shrink: 0;
+}
+.hamburger-line {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  transition: all 0.3s var(--ease);
+  transform-origin: center;
+  border-radius: 1px;
+}
+.hamburger-line + .hamburger-line { margin-top: 6px; }
+.hamburger.open .hamburger-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hamburger.open .hamburger-line:nth-child(2) { opacity: 0; }
+.hamburger.open .hamburger-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+.hamburger:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: var(--overlay-z);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+}
+.nav-overlay.visible { display: block; opacity: 1; }
+
+@media (max-width: 639px) {
+  .hamburger { display: flex; }
+  .nav-mobile {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(300px, 80vw);
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 88px 28px 32px;
+    z-index: calc(var(--nav-z) + 5);
+    transform: translateX(100%);
+    transition: transform 0.35s var(--ease);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-mobile.open { transform: translateX(0); }
+  .nav-overlay.visible { display: block; pointer-events: auto; }
+  .nav-mobile .nav-link {
+    font-size: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    min-height: 56px;
+  }
+  .nav-mobile .nav-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+    padding: 14px;
+    min-height: 52px;
+  }
+}
+@media (max-width: 360px) {
+  .nav-mobile { width: 100vw; padding: 80px 20px 24px; }
+}
+
 /* HERO */
 .hero {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   padding-top: 64px;
@@ -240,14 +336,11 @@ body::before {
 }
 .hero-inner {
   display: grid;
-  gap: 64px;
+  gap: clamp(40px, 6vw, 80px);
   align-items: center;
 }
 @media (min-width: 900px) {
-  .hero-inner {
-    grid-template-columns: 1fr 420px;
-    gap: 80px;
-  }
+  .hero-inner { grid-template-columns: 1fr 420px; gap: 80px; }
 }
 .hero-badge {
   display: inline-flex;
@@ -256,12 +349,13 @@ body::before {
   padding: 6px 14px 6px 8px;
   border: 1px solid var(--border);
   background: var(--elevated);
-  font-size: 11px;
+  font-size: clamp(10px, 0.85vw, 12px);
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 32px;
+  margin-top: clamp(20px, 3vw, 48px);
+  margin-bottom: clamp(20px, 3vw, 32px);
 }
 .badge-dot {
   width: 6px; height: 6px;
@@ -276,45 +370,45 @@ body::before {
 }
 .hero-title {
   font-family: var(--head);
-  font-size: 44px;
+  font-size: clamp(34px, 6.5vw, 72px);
   font-weight: 800;
   line-height: 1.02;
   letter-spacing: -0.04em;
-  margin-bottom: 24px;
+  margin-bottom: clamp(16px, 2vw, 24px);
+  overflow-wrap: break-word;
 }
-@media (min-width: 640px) { .hero-title { font-size: 58px; } }
-@media (min-width: 1024px) { .hero-title { font-size: 72px; } }
 .hero-title .hi { color: var(--accent); }
 .hero-title .hi2 { color: var(--accent2); }
 .hero-sub {
-  font-size: 16px;
+  font-size: clamp(15px, 1.2vw, 18px);
   font-weight: 300;
   color: var(--muted);
   max-width: 480px;
   line-height: 1.75;
-  margin-bottom: 40px;
+  margin-bottom: clamp(28px, 4vw, 40px);
 }
-@media (min-width: 768px) { .hero-sub { font-size: 17px; } }
 .hero-btns {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-bottom: 56px;
+  margin-bottom: clamp(36px, 5vw, 56px);
 }
 .btn-primary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 14px 28px;
   font-family: var(--head);
-  font-size: 13px;
+  font-size: clamp(12px, 0.95vw, 14px);
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--void);
   background: var(--accent);
   transition: all 0.25s var(--ease);
-  position: relative;
+  min-height: 52px;
+  min-width: 180px;
 }
 .btn-primary:hover {
   background: #fff;
@@ -324,10 +418,11 @@ body::before {
 .btn-outline {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 13px 28px;
   font-family: var(--head);
-  font-size: 13px;
+  font-size: clamp(12px, 0.95vw, 14px);
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -335,6 +430,8 @@ body::before {
   background: transparent;
   border: 1px solid var(--border);
   transition: all 0.25s var(--ease);
+  min-height: 52px;
+  min-width: 180px;
 }
 .btn-outline:hover {
   border-color: rgba(255,255,255,0.25);
@@ -342,21 +439,21 @@ body::before {
 }
 .hero-stats {
   display: flex;
-  gap: 32px;
+  gap: clamp(24px, 4vw, 40px);
   flex-wrap: wrap;
-  padding-top: 32px;
+  padding-top: clamp(24px, 3vw, 32px);
   border-top: 1px solid var(--border);
 }
 .hero-stat-val {
   font-family: var(--head);
-  font-size: 28px;
+  font-size: clamp(24px, 2.5vw, 28px);
   font-weight: 800;
   letter-spacing: -0.04em;
   color: var(--text);
 }
 .hero-stat-val span { color: var(--accent); }
 .hero-stat-label {
-  font-size: 12px;
+  font-size: clamp(11px, 0.85vw, 13px);
   color: var(--muted);
   font-weight: 400;
   letter-spacing: 0.02em;
@@ -364,9 +461,7 @@ body::before {
 }
 
 /* HERO CARD */
-.hero-card-wrap {
-  position: relative;
-}
+.hero-card-wrap { position: relative; }
 .hero-card-wrap::before {
   content: '';
   position: absolute;
@@ -377,12 +472,12 @@ body::before {
 .hero-card {
   background: var(--card);
   border: 1px solid var(--border);
-  padding: 32px;
+  padding: clamp(24px, 3vw, 32px);
   position: relative;
 }
 .hero-card-title {
   font-family: var(--head);
-  font-size: 12px;
+  font-size: clamp(11px, 0.85vw, 13px);
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -408,7 +503,7 @@ body::before {
   padding: 8px 10px;
   background: var(--elevated);
   border: 1px solid var(--border);
-  font-size: 11px;
+  font-size: clamp(10px, 0.75vw, 12px);
   font-weight: 500;
   color: var(--muted);
   text-align: center;
@@ -423,7 +518,7 @@ body::before {
 .hero-card-footer {
   border-top: 1px solid var(--border);
   padding-top: 20px;
-  font-size: 12px;
+  font-size: clamp(11px, 0.8vw, 13px);
   color: var(--muted);
   font-weight: 300;
   display: flex;
@@ -436,7 +531,7 @@ body::before {
 .trust {
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  padding: 16px 0;
+  padding: clamp(12px, 2vw, 20px) 0;
   background: var(--surface);
 }
 .trust-inner {
@@ -444,10 +539,10 @@ body::before {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 6px 32px;
+  gap: 6px clamp(16px, 3vw, 32px);
 }
 .trust-item {
-  font-size: 11px;
+  font-size: clamp(10px, 0.85vw, 12px);
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -461,6 +556,7 @@ body::before {
   width: 4px; height: 4px;
   background: var(--accent);
   flex-shrink: 0;
+  border-radius: 50%;
 }
 
 /* SERVICES */
@@ -469,14 +565,14 @@ body::before {
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
-  margin-top: 56px;
+  margin-top: clamp(40px, 5vw, 56px);
 }
 @media (min-width: 640px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .services-grid { grid-template-columns: repeat(4, 1fr); } }
 
 .svc-card {
   background: var(--void);
-  padding: 32px 28px;
+  padding: clamp(24px, 3vw, 32px) clamp(20px, 2.5vw, 28px);
   transition: background 0.25s var(--ease);
   position: relative;
   overflow: hidden;
@@ -494,11 +590,11 @@ body::before {
 
 .svc-num {
   font-family: var(--head);
-  font-size: 11px;
+  font-size: clamp(10px, 0.8vw, 12px);
   font-weight: 700;
   color: var(--accent);
   letter-spacing: 0.1em;
-  margin-bottom: 20px;
+  margin-bottom: clamp(14px, 2vw, 20px);
   opacity: 0.6;
 }
 .svc-icon {
@@ -507,29 +603,26 @@ body::before {
   align-items: center;
   justify-content: center;
   color: var(--accent);
-  margin-bottom: 20px;
+  margin-bottom: clamp(14px, 2vw, 20px);
+  flex-shrink: 0;
 }
 .svc-title {
   font-family: var(--head);
-  font-size: 15px;
+  font-size: clamp(14px, 1.1vw, 16px);
   font-weight: 700;
   margin-bottom: 10px;
   letter-spacing: -0.01em;
 }
 .svc-desc {
-  font-size: 13px;
+  font-size: clamp(12px, 0.95vw, 14px);
   color: var(--muted);
   line-height: 1.7;
   font-weight: 300;
-  margin-bottom: 20px;
+  margin-bottom: clamp(14px, 2vw, 20px);
 }
-.svc-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
+.svc-tags { display: flex; flex-wrap: wrap; gap: 5px; }
 .svc-tag {
-  font-size: 9px;
+  font-size: clamp(8px, 0.65vw, 10px);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -547,7 +640,7 @@ body::before {
 }
 .metrics-grid {
   display: grid;
-  gap: 48px;
+  gap: clamp(32px, 5vw, 48px);
   grid-template-columns: repeat(2, 1fr);
 }
 @media (min-width: 1024px) { .metrics-grid { grid-template-columns: repeat(4, 1fr); gap: 0; } }
@@ -568,7 +661,7 @@ body::before {
 }
 .metric-val {
   font-family: var(--head);
-  font-size: 52px;
+  font-size: clamp(36px, 5vw, 56px);
   font-weight: 800;
   letter-spacing: -0.06em;
   line-height: 1;
@@ -579,7 +672,7 @@ body::before {
   background-clip: text;
 }
 .metric-label {
-  font-size: 11px;
+  font-size: clamp(10px, 0.8vw, 12px);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -593,22 +686,21 @@ body::before {
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
-  margin-top: 48px;
+  margin-top: clamp(36px, 5vw, 48px);
 }
 @media (min-width: 600px) { .audience-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 1024px) { .audience-grid { grid-template-columns: repeat(4, 1fr); } }
 
 .aud-item {
   background: var(--void);
-  padding: 18px 20px;
+  padding: clamp(14px, 2vw, 20px) clamp(14px, 2vw, 20px);
   display: flex;
   align-items: center;
   gap: 12px;
   transition: background 0.2s;
+  min-height: 52px;
 }
-.aud-item:hover {
-  background: var(--card);
-}
+.aud-item:hover { background: var(--card); }
 .aud-dot {
   width: 6px; height: 6px;
   background: var(--accent);
@@ -617,7 +709,7 @@ body::before {
 }
 .aud-name {
   font-family: var(--head);
-  font-size: 13px;
+  font-size: clamp(12px, 0.95vw, 14px);
   font-weight: 600;
   letter-spacing: -0.01em;
 }
@@ -628,13 +720,13 @@ body::before {
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
-  margin-top: 48px;
+  margin-top: clamp(36px, 5vw, 48px);
 }
 @media (min-width: 768px) { .loc-grid { grid-template-columns: repeat(3, 1fr); } }
 
 .loc-card {
   background: var(--void);
-  padding: 36px 32px;
+  padding: clamp(24px, 3vw, 36px) clamp(20px, 2.5vw, 32px);
   display: block;
   transition: background 0.25s var(--ease);
   position: relative;
@@ -643,9 +735,9 @@ body::before {
 .loc-card::before {
   content: attr(data-num);
   position: absolute;
-  top: 20px; right: 24px;
+  top: 16px; right: 20px;
   font-family: var(--head);
-  font-size: 48px;
+  font-size: clamp(36px, 4vw, 52px);
   font-weight: 800;
   color: rgba(255,255,255,0.03);
   letter-spacing: -0.05em;
@@ -655,22 +747,22 @@ body::before {
 a.loc-card:hover { background: var(--card); }
 .loc-city {
   font-family: var(--head);
-  font-size: 22px;
+  font-size: clamp(18px, 1.8vw, 24px);
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--accent);
   margin-bottom: 6px;
 }
 .loc-state {
-  font-size: 11px;
+  font-size: clamp(10px, 0.8vw, 12px);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--muted);
-  margin-bottom: 16px;
+  margin-bottom: clamp(12px, 1.5vw, 16px);
 }
 .loc-desc {
-  font-size: 13px;
+  font-size: clamp(12px, 0.9vw, 14px);
   color: var(--muted);
   line-height: 1.7;
   font-weight: 300;
@@ -678,30 +770,29 @@ a.loc-card:hover { background: var(--card); }
 
 /* FAQ */
 .faq-list {
-  margin-top: 56px;
+  margin-top: clamp(40px, 5vw, 56px);
   border: 1px solid var(--border);
 }
-.faq-item {
-  border-bottom: 1px solid var(--border);
-}
+.faq-item { border-bottom: 1px solid var(--border); }
 .faq-item:last-child { border-bottom: none; }
 .faq-q {
   width: 100%;
   text-align: left;
-  padding: 22px 28px;
+  padding: clamp(16px, 2vw, 22px) clamp(16px, 2.5vw, 28px);
   font-family: var(--head);
-  font-size: 14px;
+  font-size: clamp(13px, 1vw, 15px);
   font-weight: 600;
   color: var(--text);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 16px;
   cursor: pointer;
   transition: color 0.2s;
   background: var(--void);
   border: none;
   letter-spacing: -0.01em;
+  min-height: 56px;
 }
 .faq-q:hover { color: var(--accent); }
 .faq-icon {
@@ -724,20 +815,20 @@ a.loc-card:hover { background: var(--card); }
 }
 .faq-item.open .faq-a { max-height: 400px; }
 .faq-a-inner {
-  padding: 0 28px 24px;
-  font-size: 14px;
+  padding: 0 clamp(16px, 2.5vw, 28px) 20px;
+  font-size: clamp(13px, 1vw, 15px);
   color: var(--muted);
   line-height: 1.8;
   font-weight: 300;
   border-top: 1px solid var(--border);
-  padding-top: 20px;
+  padding-top: 18px;
 }
 
 /* CONTACT */
 .contact-layout {
   display: grid;
-  gap: 64px;
-  margin-top: 56px;
+  gap: clamp(36px, 6vw, 80px);
+  margin-top: clamp(36px, 5vw, 56px);
 }
 @media (min-width: 900px) {
   .contact-layout {
@@ -749,18 +840,18 @@ a.loc-card:hover { background: var(--card); }
 .contact-info {
   background: var(--surface);
   border: 1px solid var(--border);
-  padding: 32px 28px;
+  padding: clamp(24px, 3vw, 32px) clamp(20px, 2.5vw, 28px);
 }
 .contact-info-item {
   display: flex;
   gap: 16px;
-  margin-bottom: 28px;
-  padding-bottom: 28px;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
   border-bottom: 1px solid var(--border);
 }
-.contact-info-item:last-child { border-bottom: none; margin-bottom: 0; }
+.contact-info-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 .info-icon {
-  width: 40px; height: 40px;
+  width: 44px; height: 44px;
   flex-shrink: 0;
   border: 1px solid var(--border);
   display: flex;
@@ -778,17 +869,17 @@ a.loc-card:hover { background: var(--card); }
 }
 .info-val {
   font-family: var(--head);
-  font-size: 14px;
+  font-size: clamp(13px, 1vw, 15px);
   font-weight: 600;
+  word-break: break-word;
 }
 
 /* FORM */
 .form-wrap {
   background: var(--card);
   border: 1px solid var(--border);
-  padding: 40px;
+  padding: clamp(24px, 3.5vw, 40px);
 }
-@media (max-width: 480px) { .form-wrap { padding: 28px 24px; } }
 .form-row {
   display: grid;
   gap: 0 20px;
@@ -796,7 +887,7 @@ a.loc-card:hover { background: var(--card); }
 @media (min-width: 480px) { .form-row { grid-template-columns: 1fr 1fr; } }
 .form-group {
   position: relative;
-  margin-bottom: 28px;
+  margin-bottom: clamp(20px, 2.5vw, 28px);
 }
 .form-label {
   display: block;
@@ -817,7 +908,7 @@ a.loc-card:hover { background: var(--card); }
   width: 100%;
   padding: 12px 14px;
   font-family: var(--body);
-  font-size: 14px;
+  font-size: 16px;
   color: var(--text);
   background: var(--elevated);
   border: 1px solid var(--border);
@@ -825,6 +916,7 @@ a.loc-card:hover { background: var(--card); }
   transition: border-color 0.2s, background 0.2s;
   -webkit-appearance: none;
   appearance: none;
+  border-radius: 0;
 }
 .form-input:focus,
 .form-select:focus,
@@ -859,7 +951,7 @@ a.loc-card:hover { background: var(--card); }
   width: 100%;
   padding: 16px 32px;
   font-family: var(--head);
-  font-size: 12px;
+  font-size: clamp(11px, 0.9vw, 13px);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -872,6 +964,7 @@ a.loc-card:hover { background: var(--card); }
   justify-content: center;
   gap: 10px;
   transition: all 0.25s var(--ease);
+  min-height: 56px;
 }
 .submit-btn:hover:not(:disabled) {
   background: #fff;
@@ -891,7 +984,7 @@ a.loc-card:hover { background: var(--card); }
 .success-state {
   display: none;
   text-align: center;
-  padding: 56px 24px;
+  padding: clamp(36px, 5vw, 56px) 20px;
 }
 .success-state.visible { display: block; animation: fadeUp 0.5s var(--ease) both; }
 @keyframes fadeUp {
@@ -909,23 +1002,21 @@ a.loc-card:hover { background: var(--card); }
 .success-check svg { color: var(--accent); }
 .success-title {
   font-family: var(--head);
-  font-size: 22px;
+  font-size: clamp(20px, 2vw, 24px);
   font-weight: 800;
   margin-bottom: 10px;
 }
-.success-text { color: var(--muted); font-size: 14px; font-weight: 300; }
+.success-text { color: var(--muted); font-size: clamp(13px, 1vw, 15px); font-weight: 300; }
 
 /* FOOTER */
 .footer {
   background: var(--surface);
   border-top: 1px solid var(--border);
 }
-.footer-top {
-  padding: 80px 0 48px;
-}
+.footer-top { padding: clamp(48px, 8vw, 80px) 0 clamp(32px, 5vw, 48px); }
 .footer-grid {
   display: grid;
-  gap: 48px;
+  gap: clamp(32px, 5vw, 48px);
 }
 @media (min-width: 768px) {
   .footer-grid {
@@ -935,7 +1026,7 @@ a.loc-card:hover { background: var(--card); }
 }
 .footer-brand-name {
   font-family: var(--head);
-  font-size: 20px;
+  font-size: clamp(17px, 1.6vw, 20px);
   font-weight: 800;
   letter-spacing: -0.04em;
   margin-bottom: 12px;
@@ -950,7 +1041,7 @@ a.loc-card:hover { background: var(--card); }
 }
 .footer-brand-name span { color: var(--accent); }
 .footer-tagline {
-  font-size: 13px;
+  font-size: clamp(12px, 0.95vw, 14px);
   color: var(--muted);
   font-weight: 300;
   line-height: 1.7;
@@ -961,7 +1052,7 @@ a.loc-card:hover { background: var(--card); }
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: clamp(12px, 0.95vw, 14px);
   color: var(--accent);
   transition: opacity 0.2s;
   font-weight: 500;
@@ -982,35 +1073,35 @@ a.loc-card:hover { background: var(--card); }
   gap: 10px;
 }
 .footer-link {
-  font-size: 13px;
+  font-size: clamp(12px, 0.9vw, 14px);
   color: var(--muted);
   transition: color 0.2s;
   font-weight: 300;
+  padding: 4px 0;
 }
 .footer-link:hover { color: var(--text); }
 .footer-bottom {
   border-top: 1px solid var(--border);
-  padding: 20px 0;
+  padding: clamp(16px, 2vw, 24px) 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: clamp(8px, 1.5vw, 16px);
 }
 .footer-copy {
-  font-size: 12px;
+  font-size: clamp(11px, 0.85vw, 13px);
   color: var(--muted);
   font-weight: 300;
 }
 
 /* FORM TRUST + WHATSAPP */
 .form-trust {
-  font-size: 12px;
+  font-size: clamp(11px, 0.85vw, 13px);
   color: var(--muted);
   text-align: center;
   margin-top: 12px;
   font-weight: 300;
-  letter-spacing: 0.01em;
 }
 .whatsapp-cta {
   display: flex;
@@ -1022,15 +1113,16 @@ a.loc-card:hover { background: var(--card); }
   background: #25D366;
   color: #fff;
   font-family: var(--head);
-  font-size: 13px;
+  font-size: clamp(12px, 0.9vw, 14px);
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   transition: opacity 0.2s;
+  min-height: 52px;
 }
 .whatsapp-cta:hover { opacity: 0.88; }
 
-/* FOCUS */
+/* FOCUS / ACCESSIBILITY */
 .sr-only {
   position: absolute; width: 1px; height: 1px;
   padding: 0; margin: -1px;
@@ -1040,6 +1132,16 @@ a.loc-card:hover { background: var(--card); }
 *:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+}
+@media (hover: none) and (pointer: coarse) {
+  .nav-link:hover { color: var(--muted); }
+  .svc-card:hover { background: var(--void); }
+  .svc-card:hover::after { width: 0; }
+  .loc-card:hover { background: var(--void); }
+  .aud-item:hover { background: var(--void); }
+  .btn-primary:hover { background: var(--accent); transform: none; box-shadow: none; }
+  .btn-outline:hover { border-color: var(--border); background: transparent; }
+  .tech-pill:hover { border-color: var(--border); color: var(--muted); background: var(--elevated); }
 }
 </style>
 </head>
@@ -1052,15 +1154,22 @@ a.loc-card:hover { background: var(--card); }
       <img src="https://ik.imagekit.io/exdev/file.jpg" alt="ExDevX" width="32" height="32" class="logo-img" loading="eager">
       <span class="logo-name">Ex<span>Dev</span>X</span>
     </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" type="button">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
     <nav aria-label="Main navigation">
-      <div class="nav">
+      <div class="nav nav-mobile" id="nav-menu">
         <a href="#services" class="nav-link">Services</a>
         <a href="#locations" class="nav-link">Locations</a>
         <a href="#faq" class="nav-link">FAQ</a>
         <a href="#contact" class="nav-link">Contact</a>
+        <a href="#contact" class="nav-cta">Start a Project</a>
       </div>
     </nav>
     <a href="#contact" class="nav-cta">Start a Project</a>
+    <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
   </div>
 </header>
 
@@ -1072,7 +1181,7 @@ a.loc-card:hover { background: var(--card); }
       <div class="hero-left">
         <div class="hero-badge">
           <span class="badge-dot" aria-hidden="true"></span>
-          Pune · Maharashtra · India
+          Pune &middot; Maharashtra &middot; India
         </div>
         <h1 class="hero-title" id="hero-heading">
           We Build<br><span class="hi">Digital</span><br><span class="hi2">Products</span>
@@ -1155,7 +1264,7 @@ a.loc-card:hover { background: var(--card); }
       <article class="svc-card" role="listitem">
         <div class="svc-num">01</div>
         <div class="svc-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18"/><path d="M3 9h18M9 21V9"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18"/><path d="M3 9h18M9 21V9"/></svg>
         </div>
         <h3 class="svc-title">Web Development</h3>
         <p class="svc-desc">React, Next.js, Vue — performance-obsessed builds with sub-second load times and mobile-first design.</p>
@@ -1168,7 +1277,7 @@ a.loc-card:hover { background: var(--card); }
       <article class="svc-card" role="listitem">
         <div class="svc-num">02</div>
         <div class="svc-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20"/><path d="M12 18h.01"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="2" width="14" height="20"/><path d="M12 18h.01"/></svg>
         </div>
         <h3 class="svc-title">Mobile App Development</h3>
         <p class="svc-desc">React Native &amp; Flutter apps for iOS and Android. Cross-platform builds with native performance.</p>
@@ -1181,7 +1290,7 @@ a.loc-card:hover { background: var(--card); }
       <article class="svc-card" role="listitem">
         <div class="svc-num">03</div>
         <div class="svc-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
         </div>
         <h3 class="svc-title">AI Integration</h3>
         <p class="svc-desc">LLM-powered chatbots, ML pipelines, intelligent automation, and AI-driven features in your product.</p>
@@ -1194,7 +1303,7 @@ a.loc-card:hover { background: var(--card); }
       <article class="svc-card" role="listitem">
         <div class="svc-num">04</div>
         <div class="svc-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="8"/><rect x="2" y="14" width="20" height="8"/><path d="M6 6h.01M6 18h.01"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="20" height="8"/><rect x="2" y="14" width="20" height="8"/><path d="M6 6h.01M6 18h.01"/></svg>
         </div>
         <h3 class="svc-title">Backend &amp; API</h3>
         <p class="svc-desc">Node.js, PostgreSQL, REST &amp; GraphQL APIs. Scalable backend systems built for 99.9% uptime.</p>
@@ -1207,7 +1316,7 @@ a.loc-card:hover { background: var(--card); }
       <article class="svc-card" role="listitem">
         <div class="svc-num">05</div>
         <div class="svc-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
         </div>
         <h3 class="svc-title">SaaS Development</h3>
         <p class="svc-desc">End-to-end SaaS architecture — auth, billing, multi-tenancy, and dashboards. Built for Maharashtra startups.</p>
@@ -1220,7 +1329,7 @@ a.loc-card:hover { background: var(--card); }
       <article class="svc-card" role="listitem">
         <div class="svc-num">06</div>
         <div class="svc-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         </div>
         <h3 class="svc-title">E-commerce</h3>
         <p class="svc-desc">Custom e-commerce stores and marketplaces for shops, brands, and retailers. Built for conversion and scale.</p>
@@ -1233,7 +1342,7 @@ a.loc-card:hover { background: var(--card); }
       <article class="svc-card" role="listitem">
         <div class="svc-num">07</div>
         <div class="svc-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="11" width="18" height="11"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         </div>
         <h3 class="svc-title">UI/UX Design</h3>
         <p class="svc-desc">User-centered design systems, wireframes, and Figma prototypes that convert visitors into customers.</p>
@@ -1246,7 +1355,7 @@ a.loc-card:hover { background: var(--card); }
       <article class="svc-card" role="listitem">
         <div class="svc-num">08</div>
         <div class="svc-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
         </div>
         <h3 class="svc-title">SEO-Friendly Websites</h3>
         <p class="svc-desc">Websites built to rank on Google — fast Core Web Vitals, structured data, local SEO for Maharashtra businesses.</p>
@@ -1345,7 +1454,7 @@ a.loc-card:hover { background: var(--card); }
     <h2 class="section-title" id="faq-heading">Frequently Asked Questions</h2>
     <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q" aria-expanded="false" aria-controls="fa1">
+        <button class="faq-q" aria-expanded="false" aria-controls="fa1" type="button">
           What services does ExDevX offer in Pune?
           <span class="faq-icon" aria-hidden="true">+</span>
         </button>
@@ -1354,7 +1463,7 @@ a.loc-card:hover { background: var(--card); }
         </div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" aria-expanded="false" aria-controls="fa2">
+        <button class="faq-q" aria-expanded="false" aria-controls="fa2" type="button">
           Who is the founder of ExDevX?
           <span class="faq-icon" aria-hidden="true">+</span>
         </button>
@@ -1363,7 +1472,7 @@ a.loc-card:hover { background: var(--card); }
         </div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" aria-expanded="false" aria-controls="fa3">
+        <button class="faq-q" aria-expanded="false" aria-controls="fa3" type="button">
           Does ExDevX serve clients outside Pune?
           <span class="faq-icon" aria-hidden="true">+</span>
         </button>
@@ -1372,7 +1481,7 @@ a.loc-card:hover { background: var(--card); }
         </div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" aria-expanded="false" aria-controls="fa4">
+        <button class="faq-q" aria-expanded="false" aria-controls="fa4" type="button">
           How much does a website cost with ExDevX?
           <span class="faq-icon" aria-hidden="true">+</span>
         </button>
@@ -1381,7 +1490,7 @@ a.loc-card:hover { background: var(--card); }
         </div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" aria-expanded="false" aria-controls="fa5">
+        <button class="faq-q" aria-expanded="false" aria-controls="fa5" type="button">
           Can ExDevX build a mobile app for my business?
           <span class="faq-icon" aria-hidden="true">+</span>
         </button>
@@ -1390,16 +1499,16 @@ a.loc-card:hover { background: var(--card); }
         </div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" aria-expanded="false" aria-controls="fa6">
+        <button class="faq-q" aria-expanded="false" aria-controls="fa6" type="button">
           How long does it take to build a website?
           <span class="faq-icon" aria-hidden="true">+</span>
         </button>
         <div class="faq-a" id="fa6">
-          <div class="faq-a-inner">A standard business website or portfolio takes 1–2 weeks. A full-stack web application or SaaS product typically takes 4–12 weeks depending on features and complexity. We provide a clear timeline and milestones before starting any project.</div>
+          <div class="faq-a-inner">A standard business website or portfolio takes 1&ndash;2 weeks. A full-stack web application or SaaS product typically takes 4&ndash;12 weeks depending on features and complexity. We provide a clear timeline and milestones before starting any project.</div>
         </div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" aria-expanded="false" aria-controls="fa7">
+        <button class="faq-q" aria-expanded="false" aria-controls="fa7" type="button">
           Does ExDevX integrate AI into websites and apps?
           <span class="faq-icon" aria-hidden="true">+</span>
         </button>
@@ -1408,7 +1517,7 @@ a.loc-card:hover { background: var(--card); }
         </div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" aria-expanded="false" aria-controls="fa8">
+        <button class="faq-q" aria-expanded="false" aria-controls="fa8" type="button">
           What types of businesses does ExDevX work with?
           <span class="faq-icon" aria-hidden="true">+</span>
         </button>
@@ -1430,7 +1539,7 @@ a.loc-card:hover { background: var(--card); }
         <p class="section-sub" style="margin-bottom: 40px;">We respond within 24 hours. Serving Pune, Ahilyanagar, Shrigonda &amp; all of Maharashtra.</p>
         <div class="contact-info-item">
           <div class="info-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </div>
           <div>
             <div class="info-label">Email</div>
@@ -1439,7 +1548,7 @@ a.loc-card:hover { background: var(--card); }
         </div>
         <div class="contact-info-item">
           <div class="info-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           </div>
           <div>
             <div class="info-label">Location</div>
@@ -1448,16 +1557,16 @@ a.loc-card:hover { background: var(--card); }
         </div>
         <div class="contact-info-item">
           <div class="info-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </div>
           <div>
             <div class="info-label">Business Hours</div>
-            <div class="info-val">Mon–Sat, 9am–8pm IST</div>
+            <div class="info-val">Mon&ndash;Sat, 9am&ndash;8pm IST</div>
           </div>
         </div>
         <div class="contact-info-item">
           <div class="info-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
           </div>
           <div>
             <div class="info-label">GitHub</div>
@@ -1476,12 +1585,10 @@ a.loc-card:hover { background: var(--card); }
             novalidate
             aria-label="Project inquiry form"
           >
-            <!-- FormSubmit config -->
-            <input type="hidden" name="_subject" value="🚀 New ExDevX Project Inquiry">
+            <input type="hidden" name="_subject" value="New ExDevX Project Inquiry">
             <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_next" value="https://exdevx.in/page/thank-you.html">
+            <input type="hidden" name="_next" value="https://exdevx.in/thank-you.html">
             <input type="hidden" name="_autoresponse" value="Thank you for contacting ExDevX. We received your inquiry and will respond within 24 hours.">
-            <!-- Honeypot -->
             <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
 
             <div class="form-row">
@@ -1503,13 +1610,13 @@ a.loc-card:hover { background: var(--card); }
               </div>
               <div class="form-group">
                 <label for="city" class="form-label">Your City / Location</label>
-                <input type="text" id="city" name="city" class="form-input" placeholder="Pune, Ahilyanagar…" autocomplete="address-level2">
+                <input type="text" id="city" name="city" class="form-input" placeholder="Pune, Ahilyanagar&hellip;" autocomplete="address-level2">
               </div>
             </div>
             <div class="form-group">
               <label for="service" class="form-label">Service Needed</label>
               <select id="service" name="service" class="form-select" required>
-                <option value="" disabled selected>Select a service…</option>
+                <option value="" disabled selected>Select a service&hellip;</option>
                 <option value="Web Development">Web Development</option>
                 <option value="Mobile App Development">Mobile App Development</option>
                 <option value="AI Integration">AI Integration</option>
@@ -1525,38 +1632,38 @@ a.loc-card:hover { background: var(--card); }
               <div class="form-group">
                 <label for="budget" class="form-label">Project Budget</label>
                 <select id="budget" name="budget" class="form-select">
-                  <option value="" disabled selected>Select budget…</option>
-                  <option value="₹10,000 – ₹25,000">₹10,000 – ₹25,000</option>
-                  <option value="₹25,000 – ₹50,000">₹25,000 – ₹50,000</option>
-                  <option value="₹50,000 – ₹1,00,000">₹50,000 – ₹1,00,000</option>
-                  <option value="₹1,00,000+">₹1,00,000+</option>
+                  <option value="" disabled selected>Select budget&hellip;</option>
+                  <option value="10000-25000">&#x20B9;10,000 &ndash; &#x20B9;25,000</option>
+                  <option value="25000-50000">&#x20B9;25,000 &ndash; &#x20B9;50,000</option>
+                  <option value="50000-100000">&#x20B9;50,000 &ndash; &#x20B9;1,00,000</option>
+                  <option value="100000+">&#x20B9;1,00,000+</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="timeline" class="form-label">Project Timeline</label>
                 <select id="timeline" name="timeline" class="form-select">
-                  <option value="" disabled selected>Select timeline…</option>
+                  <option value="" disabled selected>Select timeline&hellip;</option>
                   <option value="Urgent">Urgent</option>
                   <option value="Within 1 Month">Within 1 Month</option>
-                  <option value="2–3 Months">2–3 Months</option>
+                  <option value="2-3 Months">2&ndash;3 Months</option>
                   <option value="Just Planning">Just Planning</option>
                 </select>
               </div>
             </div>
             <div class="form-group">
               <label for="message" class="form-label">Project Details</label>
-              <textarea id="message" name="message" class="form-textarea" placeholder="Tell us about your project…" rows="4" required></textarea>
+              <textarea id="message" name="message" class="form-textarea" placeholder="Tell us about your project&hellip;" rows="4" required></textarea>
               <p class="form-error" id="message-error" role="alert">Please describe your project (min. 10 chars)</p>
             </div>
             <div class="form-group">
-              <label for="attachment" class="form-label">Attach File <span style="opacity:0.5">(optional — jpg, png, pdf, doc, docx)</span></label>
+              <label for="attachment" class="form-label">Attach File <span style="opacity:0.5">(optional &mdash; jpg, png, pdf, doc, docx)</span></label>
               <input type="file" id="attachment" name="attachment" class="form-input" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx" style="padding: 10px 14px; cursor: pointer;">
             </div>
             <div aria-live="polite" aria-atomic="true" id="form-status" class="sr-only"></div>
             <button type="submit" class="submit-btn" id="submit-btn">
               <span class="btn-text">Get Free Project Consultation</span>
             </button>
-            <p class="form-trust">🔒 Your information is secure. No spam. Response within 24 hours.</p>
+            <p class="form-trust">Your information is secure. No spam. Response within 24 hours.</p>
           </form>
           <div class="success-state" id="success-state" aria-hidden="true" aria-live="polite">
             <div class="success-check">
@@ -1582,12 +1689,12 @@ a.loc-card:hover { background: var(--card); }
       <div class="footer-grid">
         <div>
           <div class="footer-brand-name">
-            <img src="https://ik.imagekit.io/exdev/file.jpg" alt="ExDevX" loading="lazy">
+            <img src="https://ik.imagekit.io/exdev/file.jpg" alt="ExDevX" loading="lazy" width="28" height="28">
             Ex<span>Dev</span>X
           </div>
           <p class="footer-tagline">Building modern web &amp; mobile experiences for businesses across Maharashtra.</p>
           <a href="mailto:hello@exdevx.in" class="footer-email">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             hello@exdevx.in
           </a>
         </div>
@@ -1624,7 +1731,7 @@ a.loc-card:hover { background: var(--card); }
     </div>
     <div class="footer-bottom">
       <p class="footer-copy">&copy; 2026 ExDevX. Web Development Agency in Pune, Maharashtra. Founded by Abhay Jadhav.</p>
-      <p class="footer-copy">Serving Pune · Ahilyanagar · Shrigonda · Maharashtra</p>
+      <p class="footer-copy">Serving Pune &middot; Ahilyanagar &middot; Shrigonda &middot; Maharashtra</p>
     </div>
   </div>
 </footer>
@@ -1632,6 +1739,33 @@ a.loc-card:hover { background: var(--card); }
 <script>
 (function() {
   'use strict';
+
+  // Hamburger menu
+  var hamburger = document.getElementById('hamburger');
+  var navMenu = document.getElementById('nav-menu');
+  var navOverlay = document.getElementById('nav-overlay');
+
+  function toggleMenu(open) {
+    var isOpen = open !== undefined ? open : !navMenu.classList.contains('open');
+    navMenu.classList.toggle('open', isOpen);
+    hamburger.classList.toggle('open', isOpen);
+    navOverlay.classList.toggle('visible', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+
+  if (hamburger) {
+    hamburger.addEventListener('click', function() { toggleMenu(); });
+    navOverlay.addEventListener('click', function() { toggleMenu(false); });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && navMenu.classList.contains('open')) { toggleMenu(false); }
+    });
+    navMenu.querySelectorAll('.nav-link').forEach(function(link) {
+      link.addEventListener('click', function() { toggleMenu(false); });
+    });
+    var mobileCTA = navMenu.querySelector('.nav-cta');
+    if (mobileCTA) { mobileCTA.addEventListener('click', function() { toggleMenu(false); }); }
+  }
 
   // FAQ
   document.querySelectorAll('.faq-q').forEach(function(btn) {
@@ -1657,26 +1791,10 @@ a.loc-card:hover { background: var(--card); }
   var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   var fields = {
-    name: {
-      el: document.getElementById('name'),
-      err: document.getElementById('name-error'),
-      ok: function(v) { return v.trim().length >= 2; }
-    },
-    email: {
-      el: document.getElementById('email'),
-      err: document.getElementById('email-error'),
-      ok: function(v) { return emailRe.test(v.trim()); }
-    },
-    service: {
-      el: document.getElementById('service'),
-      err: document.getElementById('service-error'),
-      ok: function(v) { return v !== ''; }
-    },
-    message: {
-      el: document.getElementById('message'),
-      err: document.getElementById('message-error'),
-      ok: function(v) { return v.trim().length >= 10; }
-    }
+    name: { el: document.getElementById('name'), err: document.getElementById('name-error'), ok: function(v) { return v.trim().length >= 2; } },
+    email: { el: document.getElementById('email'), err: document.getElementById('email-error'), ok: function(v) { return emailRe.test(v.trim()); } },
+    service: { el: document.getElementById('service'), err: document.getElementById('service-error'), ok: function(v) { return v !== ''; } },
+    message: { el: document.getElementById('message'), err: document.getElementById('message-error'), ok: function(v) { return v.trim().length >= 10; } }
   };
 
   function validate(name) {
@@ -1709,21 +1827,14 @@ a.loc-card:hover { background: var(--card); }
       formStatus.textContent = 'Please fix the errors above before submitting.';
       return;
     }
-    // GA tracking
-    try {
-      if (typeof gtag === 'function') {
-        gtag('event', 'generate_lead', { form_name: 'ExDevX Contact Form' });
-      }
-    } catch(err) {}
-    // Show loading state — form will POST to FormSubmit and redirect
+    try { if (typeof gtag === 'function') { gtag('event', 'generate_lead', { form_name: 'ExDevX Contact Form' }); } } catch(err) {}
     submitBtn.disabled = true;
-    btnText.textContent = 'Sending…';
+    btnText.textContent = 'Sending\u2026';
     var sp = document.createElement('span');
     sp.className = 'spinner';
     sp.setAttribute('aria-hidden', 'true');
     submitBtn.insertBefore(sp, btnText);
-    formStatus.textContent = 'Submitting your inquiry…';
-    // Allow native submit to proceed
+    formStatus.textContent = 'Submitting your inquiry\u2026';
   });
 
   // Smooth scroll
