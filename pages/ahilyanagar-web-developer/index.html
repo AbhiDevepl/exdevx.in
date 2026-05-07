@@ -9,6 +9,8 @@
     <meta name="author" content="Abhay Jadhav">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="theme-color" content="#00FF9C">
+    <link rel="icon" href="https://ik.imagekit.io/exdev/file.jpg" sizes="any">
+    <link rel="apple-touch-icon" href="https://ik.imagekit.io/exdev/file.jpg">
     <link rel="canonical" href="https://exdevx.in/ahilyanagar-web-developer">
 
     <meta property="og:type" content="website">
@@ -17,11 +19,14 @@
     <meta property="og:description" content="Web development, app development, SaaS, and AI integration services for Ahilyanagar businesses, clinics, schools, startups, and SMEs.">
     <meta property="og:url" content="https://exdevx.in/ahilyanagar-web-developer">
     <meta property="og:locale" content="en_IN">
+    <meta property="og:image" content="https://ik.imagekit.io/exdev/file.jpg">
+    <meta property="og:image:alt" content="ExDevX — Web Developer in Ahilyanagar, Maharashtra">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@exdevx">
     <meta name="twitter:title" content="Web Developer in Ahilyanagar, Maharashtra | ExDevX">
     <meta name="twitter:description" content="ExDevX builds SEO-friendly websites, apps, APIs, SaaS platforms, and AI systems for Ahilyanagar district businesses.">
+    <meta name="twitter:image" content="https://ik.imagekit.io/exdev/file.jpg">
 
     <meta name="geo.placename" content="Ahilyanagar, Maharashtra, India">
     <meta name="geo.position" content="19.0948;74.7480">
@@ -35,7 +40,7 @@
       "@id": "https://exdevx.in/ahilyanagar-web-developer#localbusiness",
       "name": "ExDevX",
       "url": "https://exdevx.in/ahilyanagar-web-developer",
-      "logo": "https://exdevx.in/logo.png",
+      "logo": "https://ik.imagekit.io/exdev/file.jpg",
       "founder": {
         "@type": "Person",
         "name": "Abhay Jadhav"
@@ -101,6 +106,17 @@
           }
         }
       ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://exdevx.in/#organization",
+      "url": "https://exdevx.in",
+      "name": "ExDevX",
+      "description": "Web and app development agency building modern web and mobile experiences for businesses across Maharashtra.",
+      "logo": "https://ik.imagekit.io/exdev/file.jpg"
     }
     </script>
 
@@ -431,13 +447,83 @@
                 font-size: 12px;
             }
         }
+
+        .logo-image {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            object-fit: cover;
+            display: block;
+            transition: opacity var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .logo-image:hover {
+            opacity: 0.85;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 520px) {
+            .logo-image {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .footer-brand-logo {
+            width: 52px;
+            height: 52px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .footer-brand-text {
+            text-align: left;
+        }
+
+        .footer-brand-name {
+            font-family: var(--font-heading);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .footer-brand-name span {
+            color: var(--accent);
+        }
+
+        .footer-brand-tagline {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        @media (max-width: 520px) {
+            .footer-brand {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-brand-text {
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
     <header class="header">
         <div class="container header-inner">
             <a href="/" class="logo" aria-label="ExDevX home">
-                <img src="https://ik.imagekit.io/exdev/file.jpg" alt="ExDevX Logo" class="logo-image">
+                <img src="https://ik.imagekit.io/exdev/file.jpg" alt="ExDevX Logo" width="48" height="48" class="logo-image" loading="eager" fetchpriority="high">
             </a>
             <nav aria-label="Main navigation">
                 <div class="nav">
@@ -514,6 +600,13 @@
 
         <section class="section footer" aria-labelledby="cta-heading">
             <div class="container">
+                <div class="footer-brand">
+                    <img src="https://ik.imagekit.io/exdev/file.jpg" alt="ExDevX Logo" width="52" height="52" class="footer-brand-logo" loading="lazy">
+                    <div class="footer-brand-text">
+                        <p class="footer-brand-name"><span>ExDevX</span></p>
+                        <p class="footer-brand-tagline">Building Modern Web &amp; Mobile Experiences</p>
+                    </div>
+                </div>
                 <p class="section-label">Start Your Project</p>
                 <h2 class="section-title" id="cta-heading">Need a website or app in Ahilyanagar?</h2>
                 <a href="/#contact" class="btn">Talk to ExDevX</a>
