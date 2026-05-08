@@ -1,11 +1,4 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import { motion } from 'motion/react';
-import Navbar from './Navbar';
-import Footer from './Footer';
 import SEO from './SEO';
 
 export default function PrivacyPolicy() {
@@ -15,7 +8,6 @@ export default function PrivacyPolicy() {
         title="Privacy Policy | ExDevX"
         description="Privacy policy for ExDevX. Learn how we handle your data."
       />
-      <Navbar />
       <main className="pt-32 pb-20 px-6 max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -61,7 +53,6 @@ export default function PrivacyPolicy() {
           </section>
         </motion.div>
       </main>
-      <Footer />
     </div>
   );
 }

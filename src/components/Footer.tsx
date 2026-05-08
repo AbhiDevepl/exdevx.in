@@ -4,6 +4,7 @@
  */
 
 import { Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -57,8 +58,8 @@ export default function Footer() {
           © 2024 ExDevX. All rights reserved. Agency in Pune, Maharashtra.
         </p>
         <div className="flex space-x-8">
-          <a href="#" className="font-mono text-[9px] text-zinc-700 uppercase tracking-widest hover:text-zinc-500">Privacy Policy</a>
-          <a href="#" className="font-mono text-[9px] text-zinc-700 uppercase tracking-widest hover:text-zinc-500">Terms of Service</a>
+          <Link to="/privacy-policy" className="font-mono text-[9px] text-zinc-700 uppercase tracking-widest hover:text-zinc-500">Privacy Policy</Link>
+          <Link to="/terms-of-service" className="font-mono text-[9px] text-zinc-700 uppercase tracking-widest hover:text-zinc-500">Terms of Service</Link>
         </div>
       </div>
     </footer>

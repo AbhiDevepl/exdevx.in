@@ -4,8 +4,6 @@
  */
 
 import { motion } from 'motion/react';
-import Navbar from './Navbar';
-import Footer from './Footer';
 import SEO from './SEO';
 
 export default function TermsOfService() {
@@ -15,7 +13,6 @@ export default function TermsOfService() {
         title="Terms of Service | ExDevX"
         description="Terms of service for ExDevX. Read our terms and conditions."
       />
-      <Navbar />
       <main className="pt-32 pb-20 px-6 max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -68,7 +65,6 @@ export default function TermsOfService() {
           </section>
         </motion.div>
       </main>
-      <Footer />
     </div>
   );
 }

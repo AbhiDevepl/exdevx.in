@@ -9,4 +9,16 @@
   </url>
   
   <!-- Add additional pages manually here as you scale -->
+  <url>
+    <loc>https://exdevx.in/privacy-policy</loc>
+    <lastmod>2024-05-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://exdevx.in/terms-of-service</loc>
+    <lastmod>2024-05-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>
