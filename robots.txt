@@ -1,4 +1,13 @@
+# https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
 
+# Block sensitive system paths if any exist in the future
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /node_modules/
+
+# Host and Sitemap reference
+Host: https://exdevx.in
 Sitemap: https://exdevx.in/sitemap.xml
