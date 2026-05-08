@@ -33,13 +33,13 @@ export default function Contact() {
     const whatsappNumber = '917020401094';
 
     const text = `
-🚀 New Project Inquiry - ExDevX
+  New Project Inquiry - ExDevX
 
-👤 Name: ${formData.name}
-📧 Email: ${formData.email}
-🛠 Service: ${formData.service}
+  Name: ${formData.name}
+  Email: ${formData.email}
+  Service: ${formData.service}
 
-📝 Message:
+  Message:
 ${formData.message}
     `;
 
