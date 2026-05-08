@@ -8,6 +8,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import { Hero, Marquee, Services } from './components/Hero';
 import { Locations, FAQ } from './components/Locations';
@@ -15,16 +16,18 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import SEO from './components/SEO';
 import Chatbot from './components/Chatbot';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsOfService from './components/TermsOfService';
+import ScrollToTop from './components/ScrollToTop';
 
-export default function App() {
+function Home() {
   return (
-    <div className="min-h-screen">
+    <>
       <SEO 
         title="ExDevX | High-Performance Digital Solutions in Maharashtra"
         description="ExDevX is a top-rated web & app development agency in Pune, Maharashtra. We build high-performance websites, React Native apps, AI systems, and SaaS products."
         keywords="web developer pune, app developer pune, website development company pune, software company maharashtra, ExDevX, Abhay Jadhav, react native developer, saas development"
       />
-      <Navbar />
       <main>
         <Hero />
         <Marquee />
@@ -36,9 +39,25 @@ export default function App() {
         <FAQ />
         <Contact />
       </main>
-      <Footer />
-      <Chatbot />
-    </div>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <ScrollToTop />
+      <div className="min-h-screen">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+        </Routes>
+        <Footer />
+        <Chatbot />
+      </div>
+    </Router>
   );
 }
 

@@ -45,10 +45,9 @@ export default function Footer() {
         <div>
           <h4 className="font-mono text-[10px] text-zinc-700 uppercase tracking-widest mb-8">Social</h4>
           <ul className="space-y-4 text-sm text-zinc-500">
-            <li><a href="#" className="hover:text-primary transition-colors">LinkedIn</a></li>
-            <li><a href="#" className="hover:text-primary transition-colors">GitHub</a></li>
-            <li><a href="#" className="hover:text-primary transition-colors">Twitter (X)</a></li>
-            <li><a href="#" className="hover:text-primary transition-colors">Instagram</a></li>
+            <li><a href="https://www.linkedin.com/in/abhay-jadhav-56a623309/" className="hover:text-primary transition-colors">LinkedIn</a></li>
+            <li><a href="https://github.com/AbhiDevepl/" className="hover:text-primary transition-colors">GitHub</a></li>
+            <li><a href="https://www.instagram.com/dev.abhayyy/" className="hover:text-primary transition-colors">Instagram</a></li>
           </ul>
         </div>
       </div>
