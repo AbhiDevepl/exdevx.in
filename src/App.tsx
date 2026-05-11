@@ -18,10 +18,11 @@ import ScrollToTop from './components/ScrollToTop';
 function Home() {
   return (
     <>
-      <SEO 
-        title="ExDevX | High-Performance Digital Solutions in Maharashtra"
-        description="ExDevX is a top-rated web & app development agency in Pune, Maharashtra. We build high-performance websites, React Native apps, AI systems, and SaaS products."
-        keywords="web developer pune, app developer pune, website development company pune, software company maharashtra, ExDevX, Abhay Jadhav, react native developer, saas development"
+      <SEO
+        title="ExDevX | Web & App Development Agency, Pune India"
+        description="ExDevX is a Pune-based web & app development agency in Maharashtra, India. We build React websites, mobile apps, AI integrations & SaaS platforms for startups. Get a free consultation."
+        keywords="web developer pune, app developer maharashtra, website development company pune, software company maharashtra, ExDevX, Abhay Jadhav, react native developer pune, saas development india, AI integration pune, web design shrigonda, web design ahilyanagar"
+        pageType="homepage"
       />
       <main>
         <Hero />

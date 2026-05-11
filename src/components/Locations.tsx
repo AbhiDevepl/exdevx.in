@@ -55,11 +55,38 @@ export function Locations() {
 }
 
 const faqs = [
-  { q: "What services does ExDevX offer?", a: "We specialize in custom web applications (React/Next.js/Node.js), cross-platform mobile apps (React Native/Flutter), AI integrations using LLMs, and SaaS architecture." },
-  { q: "Who is the founder of ExDevX?", a: "ExDevX was founded by Abhay Jadhav, focusing on bringing high-performance digital solutions to businesses across Maharashtra." },
-  { q: "Does ExDevX serve clients outside Pune?", a: "Yes, while based in Pune, we serve businesses in Ahilyanagar, Shrigonda, and remotely across the globe." },
-  { q: "How long does it take to build a website?", a: "Typically, a website takes 4-8 weeks depending on complexity. We follow a lean approach to get your product to market efficiently." },
-  { q: "Can you build an AI-powered app?", a: "Absolutely. We integrate OpenAI, LangChain, and custom ML models to add intelligent features like chatbots, analysis, and automation." }
+  {
+    q: "What services does ExDevX offer?",
+    a: "ExDevX offers custom web development (React, Next.js, Node.js), cross-platform mobile app development (React Native, Flutter), AI system integration using OpenAI and LangChain, SaaS platform architecture, backend and API development (PostgreSQL, GraphQL), e-commerce solutions, and UI/UX design using Figma. We serve startups and businesses across Maharashtra, India."
+  },
+  {
+    q: "Who is the founder of ExDevX?",
+    a: "ExDevX was founded in 2022 by Abhay Jadhav, a software engineer based in Maharashtra, India. Abhay leads all engineering at ExDevX and has delivered live production platforms including ssnlc.in, a Next.js and Express.js platform built for a real institution. His GitHub is github.com/AbhiDevepl."
+  },
+  {
+    q: "Where is ExDevX located and which areas do you serve?",
+    a: "ExDevX is based in Pune, Maharashtra, India — with active service coverage in Ahilyanagar, Shrigonda, and across Maharashtra. We also work with clients remotely across India and internationally. Reach us at hello@exdevx.in."
+  },
+  {
+    q: "How long does it take to build a website with ExDevX?",
+    a: "A standard business website typically takes 4 to 6 weeks from kickoff to launch. Complex web applications or SaaS platforms with custom features may take 8 to 16 weeks depending on scope. ExDevX follows a lean, iterative approach to get your product to market as efficiently as possible."
+  },
+  {
+    q: "Can ExDevX build an AI-powered app or integrate AI into my existing product?",
+    a: "Yes. ExDevX integrates OpenAI GPT models, LangChain pipelines, and custom machine learning systems into web and mobile applications. Services include AI chatbots, intelligent automation, document analysis, recommendation systems, and natural language processing features tailored to your business."
+  },
+  {
+    q: "What is the cost of web development at ExDevX?",
+    a: "Pricing depends on project scope. A standard business website is affordable for small businesses in Maharashtra, while complex SaaS platforms or mobile apps are priced according to requirements. Contact us at hello@exdevx.in for a free consultation and detailed project estimate."
+  },
+  {
+    q: "Does ExDevX develop React Native and Flutter mobile apps?",
+    a: "Yes. ExDevX builds cross-platform mobile applications using React Native and Flutter for both iOS and Android. Our apps deliver native-level performance while sharing a single codebase, reducing cost and development time for startups and businesses across Pune and Maharashtra."
+  },
+  {
+    q: "What makes ExDevX different from other web development agencies in Pune?",
+    a: "ExDevX is a production-first agency focused on performance and reliability. Founded in 2022 by Abhay Jadhav, we have delivered live platforms like ssnlc.in for real institutions. We specialize in React, Node.js, AI integration, and SaaS architecture — every project is built for scale, with sub-second load times and 99.9% uptime as our standard."
+  }
 ];
 
 export function FAQ() {
@@ -70,14 +97,18 @@ export function FAQ() {
       <div className="text-center mb-12 md:mb-20">
         <div className="font-mono text-[10px] md:text-xs text-primary mb-4 tracking-widest uppercase font-bold">Common Questions</div>
         <h2 className="font-display text-3xl md:text-4xl font-bold">Frequently Asked Questions</h2>
+        <p className="text-zinc-500 text-sm md:text-base mt-4 max-w-xl mx-auto leading-relaxed">
+          Everything you need to know about working with ExDevX — Pune's high-performance web and app development agency.
+        </p>
       </div>
 
       <div className="space-y-4">
         {faqs.map((faq, idx) => (
           <div key={idx} className="border-b border-white/5 overflow-hidden">
-            <button 
+            <button
               onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
               className="w-full py-6 md:py-8 flex justify-between items-center text-left group gap-4"
+              aria-expanded={openIdx === idx}
             >
               <span className={`font-display text-base md:text-lg tracking-tight transition-colors ${openIdx === idx ? 'text-white' : 'text-zinc-500 group-hover:text-zinc-300'}`}>
                 {faq.q}
@@ -100,6 +131,16 @@ export function FAQ() {
             </motion.div>
           </div>
         ))}
+      </div>
+
+      <div className="mt-12 md:mt-16 text-center p-8 border border-white/5 rounded-2xl bg-white/[0.01]">
+        <p className="text-zinc-400 text-sm md:text-base mb-4">Still have questions? We respond within 24 hours.</p>
+        <a
+          href="mailto:hello@exdevx.in"
+          className="font-mono text-xs text-primary border-b border-primary/30 pb-1 hover:border-primary transition-colors"
+        >
+          hello@exdevx.in
+        </a>
       </div>
     </section>
   );
