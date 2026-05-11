@@ -207,7 +207,6 @@ export default function SEO({
   return (
     <Helmet>
       {/* Basic Meta */}
-      <html lang="en-IN" />
       <title>{siteTitle}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />

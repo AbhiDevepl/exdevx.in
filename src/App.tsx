@@ -39,9 +39,13 @@ function Home() {
   );
 }
 
-export default function App() {
+/**
+ * AppInner — router-agnostic layout used by both the client app (BrowserRouter)
+ * and the SSR prerender entry (StaticRouter). Keep this export stable.
+ */
+export function AppInner() {
   return (
-    <Router>
+    <>
       <ScrollToTop />
       <div className="min-h-screen">
         <Navbar />
@@ -53,7 +57,14 @@ export default function App() {
         <Footer />
         <Chatbot />
       </div>
-    </Router>
+    </>
   );
 }
 
+export default function App() {
+  return (
+    <Router>
+      <AppInner />
+    </Router>
+  );
+}
