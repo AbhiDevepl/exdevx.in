@@ -32,12 +32,12 @@ export function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-20 lg:mb-0">
-          <button className="bg-primary text-white px-8 md:px-10 py-4 font-mono text-[10px] md:text-xs font-bold tracking-widest rounded-lg transition-all hover:shadow-[0_0_30px_rgba(99,102,241,0.3)] w-full sm:w-auto">
+          <a href="#contact" className="bg-primary text-white px-8 md:px-10 py-4 font-mono text-[10px] md:text-xs font-bold tracking-widest rounded-lg transition-all hover:shadow-[0_0_30px_rgba(99,102,241,0.3)] w-full sm:w-auto text-center">
             START A PROJECT
-          </button>
-          <button className="border border-white/10 hover:border-white/20 px-8 md:px-10 py-4 font-mono text-[10px] md:text-xs font-bold tracking-widest rounded-lg transition-all w-full sm:w-auto">
+          </a>
+          <a href="#services" className="border border-white/10 hover:border-white/20 px-8 md:px-10 py-4 font-mono text-[10px] md:text-xs font-bold tracking-widest rounded-lg transition-all w-full sm:w-auto text-center">
             VIEW SERVICES
-          </button>
+          </a>
         </div>
 
         <div className="grid grid-cols-3 gap-6 md:gap-12 mt-12 md:mt-20">
