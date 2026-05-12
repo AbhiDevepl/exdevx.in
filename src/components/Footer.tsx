@@ -26,7 +26,7 @@ export default function Footer() {
               hello@exdevx.in
             </a>
             <a
-              href="tel:+918830174066"
+              href="tel:+917020401094"
               className="font-mono text-xs text-zinc-600 hover:text-zinc-400 transition-colors"
             >
               +91 88301 74066
