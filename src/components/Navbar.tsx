@@ -30,9 +30,9 @@ export default function Navbar() {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-10">
           {navLinks.map((link) => (
-            <a 
+            <a
               key={link.name}
-              href={link.href} 
+              href={link.href}
               className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 hover:text-white transition-colors"
             >
               {link.name}
@@ -41,16 +41,17 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <motion.button 
+          <motion.a
+            href="#contact"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="hidden sm:block bg-primary text-white px-6 py-3 font-mono text-[10px] font-bold tracking-widest rounded-lg shadow-lg shadow-primary/20"
           >
             START A PROJECT
-          </motion.button>
+          </motion.a>
 
           {/* Mobile Menu Toggle */}
-          <button 
+          <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden w-10 h-10 flex items-center justify-center text-white bg-white/5 rounded-lg border border-white/10"
           >
@@ -82,16 +83,18 @@ export default function Navbar() {
                   {link.name}
                 </motion.a>
               ))}
-              
-              <motion.button 
+
+              <motion.a
+                href="#contact"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="w-full bg-primary text-white py-5 font-mono text-xs font-bold tracking-[0.2em] rounded-xl mt-8"
+                onClick={() => setIsOpen(false)}
+                className="w-full bg-primary text-white py-5 font-mono text-xs font-bold tracking-[0.2em] rounded-xl mt-8 text-center block"
               >
                 START A PROJECT
-              </motion.button>
-              
+              </motion.a>
+
               <div className="pt-12">
                 <div className="font-mono text-[10px] text-zinc-700 uppercase tracking-widest mb-4">Pune · Ahilyanagar · Shrigonda</div>
                 <p className="text-zinc-500 text-sm">Building high-performance digital solutions for Maharashtra.</p>
