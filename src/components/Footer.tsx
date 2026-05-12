@@ -32,7 +32,7 @@ export default function Footer() {
               href="tel:+917020401094"
               className="font-mono text-xs text-zinc-600 hover:text-zinc-400 transition-colors"
             >
-              +91 88301 74066
+              +91 7020401094
             </a>
             <address className="font-mono text-[10px] text-zinc-700 not-italic">
               Pune, Maharashtra, India
