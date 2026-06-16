@@ -42,7 +42,7 @@ export function Hero() {
 
         <div className="grid grid-cols-3 gap-6 md:gap-12 mt-12 md:mt-20">
           <div>
-            <div className="font-display text-2xl md:text-3xl font-bold text-primary">50+</div>
+            <div className="font-display text-2xl md:text-3xl font-bold text-primary">5+</div>
             <div className="font-mono text-[8px] md:text-[10px] text-zinc-500 uppercase mt-1">Projects Delivered</div>
           </div>
           <div>
