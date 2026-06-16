@@ -2,7 +2,6 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
-
 import { motion } from 'motion/react';
 import { MapPin, Globe, Smartphone, Brain, Database, Layers, ShoppingCart, PenTool, TrendingUp } from 'lucide-react';
 
