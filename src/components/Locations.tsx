@@ -44,7 +44,7 @@ export function Locations() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {industries.map(industry => (
             <div key={industry} className="p-5 border border-white/5 bg-white/[0.02] flex items-center space-x-4 hover:border-primary/40 transition-colors rounded-lg group">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(34,211,238,0.6)]" />
               <span className="font-mono text-[10px] md:text-xs text-zinc-400 group-hover:text-white transition-colors">{industry}</span>
             </div>
           ))}

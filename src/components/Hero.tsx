@@ -31,7 +31,7 @@ export function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-20 lg:mb-0">
-          <a href="#contact" className="bg-primary hover:bg-primary-dark text-zinc-950 px-8 md:px-10 py-4 font-mono text-[10px] md:text-xs font-bold tracking-widest rounded-lg transition-all hover:shadow-[0_0_30px_rgba(52,211,153,0.35)] w-full sm:w-auto text-center focus-ring">
+          <a href="#contact" className="bg-primary hover:bg-primary-dark text-zinc-950 px-8 md:px-10 py-4 font-mono text-[10px] md:text-xs font-bold tracking-widest rounded-lg transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.35)] w-full sm:w-auto text-center focus-ring">
             START A PROJECT
           </a>
           <a href="#services" className="border border-white/10 hover:border-primary/40 text-zinc-200 hover:text-white px-8 md:px-10 py-4 font-mono text-[10px] md:text-xs font-bold tracking-widest rounded-lg transition-all w-full sm:w-auto text-center focus-ring">

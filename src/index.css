@@ -6,12 +6,23 @@
   --font-display: "Space Grotesk", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
-  /* Signal palette — terminal emerald on near-black */
-  --color-primary: #34D399;
-  --color-primary-dark: #10B981;
-  --color-surface: #0F1113;
-  --color-surface-container: #16181B;
-  --color-background: #08090A;
+  /* Signal palette — cyan on zinc */
+  --color-primary: #22D3EE;      /* cyan-400 — CTA, links, focus rings */
+  --color-primary-dark: #06B6D4; /* cyan-500 — hover/pressed */
+  --color-background: #09090B;   /* zinc-950 */
+  --color-surface: #18181B;      /* zinc-900 — cards/nav */
+  --color-surface-container: #27272A; /* zinc-800 — elevated panels */
+}
+
+/* Light mode fallback — not primary.
+   ponytail: only surface tokens flip; headings/body use hardcoded text-white/zinc-*,
+   so light mode isn't fully legible until those are tokenized. Say the word to do that sweep. */
+.light {
+  --color-background: #FAFAFA;
+  --color-surface: #FFFFFF;
+  --color-surface-container: #F4F4F5;
+  --color-primary: #0891B2;      /* cyan-600 — darker for contrast on white */
+  --color-primary-dark: #0E7490; /* cyan-700 */
 }
 
 @layer base {
@@ -29,11 +40,11 @@
 }
 
 .neon-glow {
-  @apply shadow-[0_0_20px_rgba(52,211,153,0.18)];
+  @apply shadow-[0_0_20px_rgba(34,211,238,0.18)];
 }
 
 .neon-glow-sm {
-  @apply shadow-[0_0_14px_rgba(52,211,153,0.30)];
+  @apply shadow-[0_0_14px_rgba(34,211,238,0.30)];
 }
 
 /* Consistent keyboard-focus ring for all interactive elements */
