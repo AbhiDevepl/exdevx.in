@@ -22,9 +22,9 @@ export function Hero() {
           <span className="font-mono text-[9px] md:text-[10px] text-primary uppercase tracking-wider">Pune · Maharashtra · India</span>
         </div>
         
-        <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-[1.1] tracking-tight">
+        <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-[1.1] tracking-tight text-white">
           We Build <br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-primary/60">Digital Products</span>
+          <span className="text-primary">Digital Products</span>
         </h1>
         
         <p className="text-zinc-400 text-base md:text-xl max-w-xl mb-10 md:mb-12 leading-relaxed">
@@ -32,10 +32,10 @@ export function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-20 lg:mb-0">
-          <a href="#contact" className="bg-primary text-white px-8 md:px-10 py-4 font-mono text-[10px] md:text-xs font-bold tracking-widest rounded-lg transition-all hover:shadow-[0_0_30px_rgba(99,102,241,0.3)] w-full sm:w-auto text-center">
+          <a href="#contact" className="bg-primary hover:bg-primary-dark text-zinc-950 px-8 md:px-10 py-4 font-mono text-[10px] md:text-xs font-bold tracking-widest rounded-lg transition-all hover:shadow-[0_0_30px_rgba(52,211,153,0.35)] w-full sm:w-auto text-center focus-ring">
             START A PROJECT
           </a>
-          <a href="#services" className="border border-white/10 hover:border-white/20 px-8 md:px-10 py-4 font-mono text-[10px] md:text-xs font-bold tracking-widest rounded-lg transition-all w-full sm:w-auto text-center">
+          <a href="#services" className="border border-white/10 hover:border-primary/40 text-zinc-200 hover:text-white px-8 md:px-10 py-4 font-mono text-[10px] md:text-xs font-bold tracking-widest rounded-lg transition-all w-full sm:w-auto text-center focus-ring">
             VIEW SERVICES
           </a>
         </div>

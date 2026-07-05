@@ -149,7 +149,7 @@ ${formData.message}
                   onChange={handleChange}
                   placeholder="Abhay Jadhav"
                   required
-                  className="w-full bg-white/[0.03] border border-white/5 rounded-lg px-4 md:px-5 py-3 md:py-4 focus:border-primary outline-none text-zinc-200 text-sm md:text-base"
+                  className="w-full bg-white/[0.03] border border-white/5 rounded-lg px-4 md:px-5 py-3 md:py-4 focus:border-primary outline-none focus-visible:ring-1 focus-visible:ring-primary/60 text-zinc-200 text-sm md:text-base transition-colors"
                 />
               </div>
 
@@ -166,7 +166,7 @@ ${formData.message}
                   onChange={handleChange}
                   placeholder="abhay@exdevx.in"
                   required
-                  className="w-full bg-white/[0.03] border border-white/5 rounded-lg px-4 md:px-5 py-3 md:py-4 focus:border-primary outline-none text-zinc-200 text-sm md:text-base"
+                  className="w-full bg-white/[0.03] border border-white/5 rounded-lg px-4 md:px-5 py-3 md:py-4 focus:border-primary outline-none focus-visible:ring-1 focus-visible:ring-primary/60 text-zinc-200 text-sm md:text-base transition-colors"
                 />
               </div>
             </div>
@@ -182,7 +182,7 @@ ${formData.message}
                 value={formData.service}
                 onChange={handleChange}
                 required
-                className="w-full bg-white/[0.03] border border-white/5 rounded-lg px-4 md:px-5 py-3 md:py-4 focus:border-primary outline-none text-zinc-400 appearance-none text-sm md:text-base"
+                className="w-full bg-white/[0.03] border border-white/5 rounded-lg px-4 md:px-5 py-3 md:py-4 focus:border-primary outline-none focus-visible:ring-1 focus-visible:ring-primary/60 text-zinc-400 appearance-none text-sm md:text-base transition-colors"
               >
                 <option value="">Select a service...</option>
                 <option>Web Development</option>
@@ -214,7 +214,7 @@ ${formData.message}
               type="submit"
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
-              className="w-full bg-primary text-white font-mono text-[10px] md:text-xs font-bold tracking-[0.2em] py-5 md:py-6 rounded-lg shadow-xl shadow-primary/20 flex items-center justify-center gap-3 transition-colors hover:bg-primary/90"
+              className="w-full bg-primary hover:bg-primary-dark text-zinc-950 font-mono text-[10px] md:text-xs font-bold tracking-[0.2em] py-5 md:py-6 rounded-lg shadow-xl shadow-primary/20 flex items-center justify-center gap-3 transition-colors focus-ring"
             >
               <Send className="w-4 h-4" />
               GET FREE CONSULTATION
@@ -227,17 +227,26 @@ ${formData.message}
               </span>
             </div>
 
-            {/* DIVIDER */}
+            {/* DIVIDER + DIRECT EMAIL CTA */}
             <div className="relative py-2">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-white/5" />
               </div>
 
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-4 font-mono text-zinc-800">
+              <div className="relative flex justify-center">
+                <span className="bg-background px-4 font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-600">
+                  Or reach us directly
                 </span>
               </div>
             </div>
+
+            <a
+              href="mailto:hello@exdevx.in"
+              className="w-full border border-white/10 hover:border-primary/40 text-zinc-300 hover:text-white font-mono text-[10px] md:text-xs font-bold tracking-[0.2em] py-4 md:py-5 rounded-lg flex items-center justify-center gap-3 transition-colors focus-ring"
+            >
+              <Mail className="w-4 h-4 text-primary" />
+              HELLO@EXDEVX.IN
+            </a>
           </form>
         </div>
       </div>

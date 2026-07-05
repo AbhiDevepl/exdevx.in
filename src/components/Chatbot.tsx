@@ -21,6 +21,7 @@ export default function Chatbot() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -29,6 +30,17 @@ export default function Chatbot() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Keyboard nav: focus input on open, close on Escape
+  useEffect(() => {
+    if (!isOpen) return;
+    inputRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen]);
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -95,9 +107,11 @@ export default function Chatbot() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-[60] w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center neon-glow-sm"
+        aria-label={isOpen ? 'Close chat assistant' : 'Open chat assistant'}
+        aria-expanded={isOpen}
+        className="fixed bottom-6 right-6 z-[60] w-14 h-14 bg-primary hover:bg-primary-dark text-zinc-950 rounded-full shadow-2xl flex items-center justify-center neon-glow-sm transition-colors focus-ring"
       >
-        {isOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6 fill-white" />}
+        {isOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6 fill-zinc-950" />}
       </motion.button>
 
       {/* Chat Window */}
@@ -107,7 +121,10 @@ export default function Chatbot() {
             initial={{ opacity: 0, y: 20, scale: 0.95, transformOrigin: 'bottom right' }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-24 right-6 z-[60] w-[calc(100vw-3rem)] sm:w-[400px] h-[500px] sm:h-[600px] bg-zinc-950 border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            role="dialog"
+            aria-modal="false"
+            aria-label="ExDevX AI assistant"
+            className="fixed bottom-24 right-6 z-[60] w-[calc(100vw-3rem)] sm:w-[400px] h-[500px] sm:h-[600px] bg-surface-container border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="p-4 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
@@ -123,9 +140,10 @@ export default function Chatbot() {
                   </div>
                 </div>
               </div>
-              <button 
+              <button
                 onClick={() => setIsOpen(false)}
-                className="text-zinc-500 hover:text-white transition-colors"
+                aria-label="Close chat"
+                className="text-zinc-500 hover:text-white transition-colors rounded focus-ring"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -144,7 +162,7 @@ export default function Chatbot() {
                     </div>
                     <div className={`p-3 rounded-2xl text-sm leading-relaxed ${
                       msg.role === 'user' 
-                        ? 'bg-primary text-white rounded-tr-none' 
+                        ? 'bg-primary text-zinc-950 rounded-tr-none'
                         : 'bg-white/5 text-zinc-300 border border-white/5 rounded-tl-none'
                     }`}>
                       {msg.content}
@@ -174,16 +192,19 @@ export default function Chatbot() {
                 className="relative"
               >
                 <input
+                  ref={inputRef}
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Type your message..."
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-12 text-sm text-white focus:border-primary outline-none transition-colors"
+                  aria-label="Message the ExDevX assistant"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-12 text-sm text-white focus:border-primary outline-none focus-visible:ring-1 focus-visible:ring-primary/60 transition-colors"
                 />
                 <button
                   type="submit"
                   disabled={!input.trim() || isLoading}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-primary hover:text-white disabled:text-zinc-700 transition-colors"
+                  aria-label="Send message"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg text-primary hover:text-white disabled:text-zinc-700 transition-colors focus-ring"
                 >
                   <Send className="w-4 h-4" />
                 </button>

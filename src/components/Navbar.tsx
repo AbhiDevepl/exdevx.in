@@ -21,20 +21,20 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 h-20">
       <div className="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
-        <Link to="/" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2 rounded-lg focus-ring">
           <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center neon-glow">
-            <Zap className="text-white w-6 h-6 fill-white" />
+            <Zap className="text-zinc-950 w-6 h-6 fill-zinc-950" />
           </div>
           <span className="font-display text-2xl font-bold tracking-tighter text-white uppercase">ExDevX</span>
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center space-x-10">
+        <div className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 hover:text-white transition-colors"
+              className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 hover:text-white px-2 py-1 rounded transition-colors focus-ring"
             >
               {link.name}
             </a>
@@ -46,7 +46,7 @@ export default function Navbar() {
             href="#contact"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="hidden sm:block bg-primary text-white px-6 py-3 font-mono text-[10px] font-bold tracking-widest rounded-lg shadow-lg shadow-primary/20"
+            className="hidden sm:block bg-primary hover:bg-primary-dark text-zinc-950 px-6 py-3 font-mono text-[10px] font-bold tracking-widest rounded-lg shadow-lg shadow-primary/20 transition-colors focus-ring"
           >
             START A PROJECT
           </motion.a>
@@ -54,7 +54,9 @@ export default function Navbar() {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden w-10 h-10 flex items-center justify-center text-white bg-white/5 rounded-lg border border-white/10"
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isOpen}
+            className="md:hidden w-10 h-10 flex items-center justify-center text-white bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 transition-colors focus-ring"
           >
             {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -91,7 +93,7 @@ export default function Navbar() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
                 onClick={() => setIsOpen(false)}
-                className="w-full bg-primary text-white py-5 font-mono text-xs font-bold tracking-[0.2em] rounded-xl mt-8 text-center block"
+                className="w-full bg-primary hover:bg-primary-dark text-zinc-950 py-5 font-mono text-xs font-bold tracking-[0.2em] rounded-xl mt-8 text-center block transition-colors focus-ring"
               >
                 START A PROJECT
               </motion.a>

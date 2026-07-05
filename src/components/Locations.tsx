@@ -44,7 +44,7 @@ export function Locations() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {industries.map(industry => (
             <div key={industry} className="p-5 border border-white/5 bg-white/[0.02] flex items-center space-x-4 hover:border-primary/40 transition-colors rounded-lg group">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(99,102,241,0.6)]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
               <span className="font-mono text-[10px] md:text-xs text-zinc-400 group-hover:text-white transition-colors">{industry}</span>
             </div>
           ))}
@@ -107,7 +107,7 @@ export function FAQ() {
           <div key={idx} className="border-b border-white/5 overflow-hidden">
             <button
               onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
-              className="w-full py-6 md:py-8 flex justify-between items-center text-left group gap-4"
+              className="w-full py-6 md:py-8 flex justify-between items-center text-left group gap-4 rounded-lg focus-ring"
               aria-expanded={openIdx === idx}
             >
               <span className={`font-display text-base md:text-lg tracking-tight transition-colors ${openIdx === idx ? 'text-white' : 'text-zinc-500 group-hover:text-zinc-300'}`}>
@@ -137,7 +137,7 @@ export function FAQ() {
         <p className="text-zinc-400 text-sm md:text-base mb-4">Still have questions? We respond within 24 hours.</p>
         <a
           href="mailto:hello@exdevx.in"
-          className="font-mono text-xs text-primary border-b border-primary/30 pb-1 hover:border-primary transition-colors"
+          className="font-mono text-xs text-primary border-b border-primary/30 pb-1 hover:border-primary transition-colors rounded-sm focus-ring"
         >
           hello@exdevx.in
         </a>
