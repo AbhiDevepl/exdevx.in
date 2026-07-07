@@ -41,7 +41,7 @@ export default function PrivacyPolicy() {
           <section className="mb-12">
             <h2 className="text-2xl font-bold text-white mb-4">4. Third-Party Services</h2>
             <p className="text-zinc-400 mb-4">
-              We may use third-party services like Google Analytics or AI models (Gemini) to improve our user experience and service delivery. These services have their own privacy policies.
+              We may use third-party services like Google Analytics or AI models (Groq) to improve our user experience and service delivery. These services have their own privacy policies.
             </p>
           </section>
 
