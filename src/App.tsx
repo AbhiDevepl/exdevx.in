@@ -4,6 +4,7 @@
  */
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import Navbar from './components/Navbar';
 import { Hero, Marquee, Services } from './components/Hero';
 import { Locations, FAQ } from './components/Locations';
@@ -65,6 +66,7 @@ export default function App() {
   return (
     <Router>
       <AppInner />
+      <SpeedInsights />
     </Router>
   );
 }
