@@ -2,14 +2,24 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig, loadEnv} from 'vite';
+import {handleChat} from './api/chat.js';
 
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
+  // Dev middleware runs in Node (never shipped to the browser), so the key
+  // stays server-side. loadEnv doesn't touch process.env, so set it here.
+  process.env.GEMINI_API_KEY = env.GEMINI_API_KEY;
   return {
-    plugins: [react(), tailwindcss()],
-    define: {
-      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-    },
+    plugins: [
+      react(),
+      tailwindcss(),
+      {
+        name: 'dev-api-chat',
+        configureServer(server) {
+          server.middlewares.use('/api/chat', handleChat);
+        },
+      },
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

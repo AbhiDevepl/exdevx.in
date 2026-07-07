@@ -10,7 +10,7 @@
 import { build } from 'vite';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -53,7 +53,7 @@ await build({
 console.log('\n[prerender] Rendering pages…');
 
 const serverEntryPath = path.join(root, 'dist/server/entry-server.js');
-const { render } = (await import(serverEntryPath)) as {
+const { render } = (await import(pathToFileURL(serverEntryPath).href)) as {
   render: (url: string) => { html: string };
 };
 

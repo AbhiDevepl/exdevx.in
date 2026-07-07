@@ -6,7 +6,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageSquare, X, Send, Bot, User, Loader2 } from 'lucide-react';
-import { GoogleGenAI } from "@google/genai";
 
 interface Message {
   role: 'user' | 'assistant';
@@ -51,44 +50,15 @@ export default function Chatbot() {
     setIsLoading(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-      
-      const systemInstruction = `
-        You are the official AI assistant for ExDevX, a high-performance digital solutions agency based in Maharashtra, India.
-        
-        Company Details:
-        - Name: ExDevX
-        - Founder: Abhay Jadhav
-        - Founded: 2022
-        - Locations: Pune (Primary base), Ahilyanagar, Shrigonda.
-        - Core Services: Web Development (React, Next.js, Vue), Mobile App Development (React Native, Flutter), AI System Integration, SaaS Products, and UI/UX Design (Figma).
-        - Tech Stack: Node.js, PostgreSQL, GraphQL, OpenAI, LangChain, Stripe.
-        - Philosophy: High-performance, production-grade software for startups and businesses.
-        - Goal: Help clients build scalable, modern digital products.
-
-        Instructions:
-        - Be professional, tech-forward, and helpful.
-        - If someone asks to start a project, encourage them to use the contact form or email hello@exdevx.in.
-        - Keep responses concise and focused on how ExDevX can solve their problems.
-        - Emphasize the Maharashtra context (Pune, local expertise).
-        - If asked about Abhay Jadhav, mention he is the expert founder leading the engineering efforts.
-      `;
-
-      const history = messages.map(msg => ({
-        role: msg.role === 'user' ? 'user' : 'model',
-        parts: [{ text: msg.content }]
-      }));
-
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: [
-          { role: 'user', parts: [{ text: systemInstruction }] },
-          ...history,
-          { role: 'user', parts: [{ text: userMessage }] }
-        ]
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages, message: userMessage }),
       });
+      if (!res.ok) throw new Error(`chat ${res.status}`);
+      const { text } = await res.json();
 
-      const aiResponse = response.text || "I'm sorry, I encountered an error. Please try again or contact us directly.";
+      const aiResponse = text || "I'm sorry, I encountered an error. Please try again or contact us directly.";
       setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }]);
     } catch (error) {
       console.error("Chatbot Error:", error);
