@@ -2,7 +2,7 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig, loadEnv} from 'vite';
-import {handleChat} from './api/chat.js';
+import chatHandler from './api/chat.js';
 
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
@@ -16,7 +16,7 @@ export default defineConfig(({mode}) => {
       {
         name: 'dev-api-chat',
         configureServer(server) {
-          server.middlewares.use('/api/chat', handleChat);
+          server.middlewares.use('/api/chat', chatHandler);
         },
       },
     ],

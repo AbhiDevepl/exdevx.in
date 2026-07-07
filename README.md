@@ -116,11 +116,19 @@ Output: fully pre-rendered static HTML files in `dist/` ready to deploy anywhere
 
 ## Deployment
 
-Deployed as a **static site** on Replit. The build command runs the full SSG pipeline automatically.
+Deployed on **Vercel** (Vite preset). The prerendered site is served as static
+files from `dist/`, and `POST /api/chat` runs as a Vercel Serverless Function
+(`api/chat.js`). Config lives in `vercel.json`.
 
-- **Build command:** `npm run build`  
-- **Publish directory:** `dist`
+- **Build command:** `npm run build`
+- **Output directory:** `dist`
+- **Env vars:** set `GEMINI_API_KEY` in Project Settings → Environment Variables (Production + Preview + Development). No `VITE_` prefix — it must stay server-side.
+- **Rate limiting:** `/api/chat` is throttled at the edge via **Vercel Firewall** (dashboard rule: 10 req/min per IP). Custom firewall rules require the **Pro** plan.
 - **Live site:** [exdevx.in](https://exdevx.in)
+
+Local API dev: `npm run dev` (Vite mounts the same `api/chat.js` handler as
+middleware) or `vercel dev` (runs the function under the Vercel runtime). Both
+use one handler — no divergent code path.
 
 After deploying, submit the sitemap in Google Search Console:  
 `https://exdevx.in/sitemap.xml`
