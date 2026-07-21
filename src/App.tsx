@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import { Hero, Marquee, Services } from './components/Hero';
@@ -10,10 +11,34 @@ import { Locations, FAQ } from './components/Locations';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import SEO from './components/SEO';
-import Chatbot from './components/Chatbot';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
 import ScrollToTop from './components/ScrollToTop';
+
+const Chatbot = lazy(() => import('./components/Chatbot'));
+
+/**
+ * Mounts the chatbot in its own chunk after the browser is idle, so it never
+ * competes with first paint. Renders nothing during SSR (useEffect doesn't run),
+ * which also keeps hydration consistent.
+ */
+function DeferredChatbot() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    if ('requestIdleCallback' in window) {
+      const id = requestIdleCallback(() => setReady(true));
+      return () => cancelIdleCallback(id);
+    }
+    const id = setTimeout(() => setReady(true), 1500);
+    return () => clearTimeout(id);
+  }, []);
+  if (!ready) return null;
+  return (
+    <Suspense fallback={null}>
+      <Chatbot />
+    </Suspense>
+  );
+}
 
 function Home() {
   return (
@@ -55,7 +80,7 @@ export function AppInner() {
           <Route path="/terms-of-service" element={<TermsOfService />} />
         </Routes>
         <Footer />
-        <Chatbot />
+        <DeferredChatbot />
       </div>
     </>
   );
