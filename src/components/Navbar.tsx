@@ -36,6 +36,16 @@ export default function Navbar() {
     return () => window.removeEventListener('keydown', onKey);
   }, [isOpen]);
 
+  // lock body scroll while the mobile drawer is open
+  useEffect(() => {
+    if (!isOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isOpen]);
+
   const isActive = (href: string) =>
     href.startsWith('#') ? hash === href : pathname === href;
 
@@ -43,7 +53,7 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 w-full z-50 h-20 border-b transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300 ${
         scrolled
-          ? 'bg-background/80 backdrop-blur-xl border-zinc-800 shadow-lg shadow-black/20'
+          ? 'bg-background/80 backdrop-blur-xl border-zinc-800 shadow-lg shadow-black/10'
           : 'bg-transparent border-transparent'
       }`}
     >
@@ -81,14 +91,12 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <motion.a
+          <a
             href="#contact"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="hidden sm:block bg-primary hover:bg-primary-dark text-zinc-950 px-6 py-3 font-mono text-[10px] font-bold tracking-widest rounded-lg shadow-lg shadow-primary/20 transition-colors focus-ring"
+            className="btn btn-primary hidden sm:inline-flex"
           >
             START A PROJECT
-          </motion.a>
+          </a>
 
           {/* Mobile Menu Toggle */}
           <button
@@ -140,7 +148,7 @@ export default function Navbar() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
                 onClick={() => setIsOpen(false)}
-                className="w-full bg-primary hover:bg-primary-dark text-zinc-950 py-5 font-mono text-xs font-bold tracking-[0.2em] rounded-xl mt-8 text-center block transition-colors focus-ring"
+                className="btn btn-primary btn-lg w-full mt-8"
               >
                 START A PROJECT
               </motion.a>

@@ -34,16 +34,18 @@ export default function Footer() {
             >
               +91 7020401094
             </a>
-            <address className="font-mono text-[10px] text-zinc-700 not-italic">
-              Pune, Maharashtra, India
+            <address className="font-mono text-[10px] text-zinc-700 not-italic leading-relaxed">
+              Pune · Ahilyanagar · Shrigonda
+              <br />
+              Maharashtra · India
             </address>
           </div>
         </div>
 
         <div>
-          <h4 className="font-mono text-[10px] text-zinc-700 uppercase tracking-widest mb-8">
+          <h3 className="font-mono text-[10px] text-zinc-700 uppercase tracking-widest mb-8">
             Services
-          </h4>
+          </h3>
           <ul className="space-y-4 text-sm text-zinc-500">
             <li>
               <a
@@ -97,9 +99,9 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="font-mono text-[10px] text-zinc-700 uppercase tracking-widest mb-8">
+          <h3 className="font-mono text-[10px] text-zinc-700 uppercase tracking-widest mb-8">
             Company
-          </h4>
+          </h3>
           <ul className="space-y-4 text-sm text-zinc-500">
             <li>
               <a
@@ -152,9 +154,9 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="font-mono text-[10px] text-zinc-700 uppercase tracking-widest mb-8">
+          <h3 className="font-mono text-[10px] text-zinc-700 uppercase tracking-widest mb-8">
             Connect
-          </h4>
+          </h3>
           <ul className="space-y-4 text-sm text-zinc-500">
             <li>
               <a
@@ -183,39 +185,28 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="hover:text-primary transition-colors"
               >
-                Instagram - dev.abhayyy
+                Instagram — dev.abhayyy
               </a>
             </li>
           </ul>
-
-          <div className="mt-8">
-            <h4 className="font-mono text-[10px] text-zinc-700 uppercase tracking-widest mb-4">
-              Serving
-            </h4>
-            <p className="text-xs text-zinc-600 leading-relaxed">
-              Pune · Ahilyanagar · Shrigonda
-              <br />
-              Maharashtra · India
-            </p>
-          </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-center gap-6">
-        <p className="font-mono text-[9px] text-zinc-700 uppercase tracking-widest">
+        <p className="font-mono text-xs text-zinc-700 tracking-wide">
           © 2026 ExDevX. All rights reserved. Web &amp; App Development Agency
           — Pune, Maharashtra, India.
         </p>
         <div className="flex space-x-8">
           <Link
             to="/privacy-policy"
-            className="font-mono text-[9px] text-zinc-700 uppercase tracking-widest hover:text-zinc-500"
+            className="font-mono text-xs text-zinc-700 hover:text-zinc-500 tracking-wide"
           >
             Privacy Policy
           </Link>
           <Link
             to="/terms-of-service"
-            className="font-mono text-[9px] text-zinc-700 uppercase tracking-widest hover:text-zinc-500"
+            className="font-mono text-xs text-zinc-700 hover:text-zinc-500 tracking-wide"
           >
             Terms of Service
           </Link>

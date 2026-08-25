@@ -13,26 +13,24 @@ const industries = ["Startups", "Local Businesses", "Clinics & Hospitals", "Rest
 export function Locations() {
   return (
     <section id="locations" className="px-6 py-20 md:py-32 max-w-7xl mx-auto">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-end mb-12 md:mb-20">
-        <div>
-          <div className="font-mono text-[10px] md:text-xs text-primary mb-4 tracking-widest uppercase font-bold">Where we serve</div>
-          <h2 className="font-display text-3xl md:text-5xl font-bold leading-tight">Web Development <br/> Across Maharashtra</h2>
-        </div>
-        <p className="text-zinc-500 text-base md:text-lg max-w-xl mb-2">
+      <div className="mb-12 md:mb-20 max-w-3xl">
+        <div className="font-mono text-[10px] md:text-xs text-primary mb-4 tracking-widest uppercase font-bold">Where we serve</div>
+        <h2 className="font-display text-3xl md:text-5xl font-bold leading-tight tracking-tight">Web Development <br/> Across Maharashtra</h2>
+        <p className="text-zinc-500 text-base md:text-lg mt-4 md:mt-6 max-w-xl leading-relaxed">
           Maharashtra-based agency serving clients locally and remotely across the state and beyond.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 border border-white/5">
         {[
-          { id: '01', city: 'Pune', desc: 'Our primary base. Serving startups, enterprises, and local businesses with world-class web and app development.', accent: 'text-primary' },
-          { id: '02', city: 'Ahilyanagar', desc: 'Custom business websites and mobile apps for entrepreneurs in Ahilyanagar and surrounding areas.', accent: 'text-white' },
-          { id: '03', city: 'Shrigonda', desc: 'React Native app development and business websites for local shops and clinics in Shrigonda.', accent: 'text-zinc-400' }
+          { id: '01', city: 'Pune', desc: 'Our primary base. Serving startups, enterprises, and local businesses with world-class web and app development.' },
+          { id: '02', city: 'Ahilyanagar', desc: 'Custom business websites and mobile apps for entrepreneurs in Ahilyanagar and surrounding areas.' },
+          { id: '03', city: 'Shrigonda', desc: 'React Native app development and business websites for local shops and clinics in Shrigonda.' }
         ].map((loc) => (
-          <div key={loc.id} className="glass-card p-8 md:p-10 rounded-2xl relative overflow-hidden group border-white/5">
+          <div key={loc.id} className="p-8 md:p-10 border-white/5 [&:not(:last-child)]:md:border-r relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-6 md:p-8 font-display text-6xl md:text-7xl text-white/[0.03] group-hover:text-white/[0.08] transition-colors font-bold">{loc.id}</div>
-            <h3 className={`font-display text-xl md:text-2xl font-bold mb-2 ${loc.accent}`}>{loc.city}</h3>
-            <div className="font-mono text-[8px] md:text-[9px] text-zinc-600 mb-6 uppercase tracking-[0.2em]">MAHARASHTRA, INDIA</div>
+            <h3 className="font-display text-xl md:text-2xl font-bold mb-2 text-white">{loc.city}</h3>
+            <div className="font-mono text-[10px] md:text-xs text-zinc-600 mb-6 uppercase tracking-[0.2em]">MAHARASHTRA, INDIA</div>
             <p className="text-zinc-500 leading-relaxed text-xs md:text-sm relative z-10">{loc.desc}</p>
           </div>
         ))}
@@ -40,12 +38,12 @@ export function Locations() {
 
       <div className="mt-24 md:mt-40">
         <div className="font-mono text-[10px] md:text-xs text-primary mb-6 tracking-widest uppercase font-bold">Who we work with</div>
-        <h2 className="font-display text-3xl md:text-5xl font-bold mb-8 md:mb-12">Built for every business</h2>
+        <h2 className="font-display text-3xl md:text-5xl font-bold mb-8 md:mb-12 tracking-tight">Built for every business</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {industries.map(industry => (
-            <div key={industry} className="p-5 border border-white/5 bg-white/[0.02] flex items-center space-x-4 hover:border-primary/40 transition-colors rounded-lg group">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(34,211,238,0.6)]" />
-              <span className="font-mono text-[10px] md:text-xs text-zinc-400 group-hover:text-white transition-colors">{industry}</span>
+            <div key={industry} className="flex items-center space-x-3">
+              <span className="w-1 h-1 rounded-full bg-primary/60 shrink-0" aria-hidden="true" />
+              <span className="font-mono text-[10px] md:text-xs text-zinc-400">{industry}</span>
             </div>
           ))}
         </div>
@@ -85,7 +83,7 @@ const faqs = [
   },
   {
     q: "What makes ExDevX different from other web development agencies in Pune?",
-    a: "ExDevX is a production-first agency focused on performance and reliability. Founded in 2022 by Abhay Jadhav, we have delivered live platforms like ssnlc.in for real institutions. We specialize in React, Node.js, AI integration, and SaaS architecture — every project is built for scale, with sub-second load times and 99.9% uptime as our standard."
+    a: "ExDevX is a production-first agency focused on performance and reliability. Founded in 2022 by Abhay Jadhav, we have delivered live platforms like ssnlc.in for real institutions. We specialize in React, Node.js, AI integration, and SaaS architecture — not just static websites. Every project is designed for scale from the start."
   }
 ];
 
@@ -94,10 +92,10 @@ export function FAQ() {
 
   return (
     <section id="faq" className="px-6 py-20 md:py-32 max-w-3xl mx-auto">
-      <div className="text-center mb-12 md:mb-20">
+      <div className="mb-12 md:mb-20">
         <div className="font-mono text-[10px] md:text-xs text-primary mb-4 tracking-widest uppercase font-bold">Common Questions</div>
-        <h2 className="font-display text-3xl md:text-4xl font-bold">Frequently Asked Questions</h2>
-        <p className="text-zinc-500 text-sm md:text-base mt-4 max-w-xl mx-auto leading-relaxed">
+        <h2 className="font-display text-3xl md:text-4xl font-bold tracking-tight">Frequently Asked Questions</h2>
+        <p className="text-zinc-500 text-sm md:text-base mt-4 max-w-xl leading-relaxed">
           Everything you need to know about working with ExDevX — Pune's high-performance web and app development agency.
         </p>
       </div>
@@ -107,7 +105,7 @@ export function FAQ() {
           <div key={idx} className="border-b border-white/5 overflow-hidden">
             <button
               onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
-              className="w-full py-6 md:py-8 flex justify-between items-center text-left group gap-4 rounded-lg focus-ring"
+              className="w-full py-4 md:py-5 flex justify-between items-center text-left group gap-4 rounded-lg focus-ring"
               aria-expanded={openIdx === idx}
             >
               <span className={`font-display text-base md:text-lg tracking-tight transition-colors ${openIdx === idx ? 'text-white' : 'text-zinc-500 group-hover:text-zinc-300'}`}>
@@ -125,7 +123,7 @@ export function FAQ() {
               animate={{ height: openIdx === idx ? 'auto' : 0, opacity: openIdx === idx ? 1 : 0 }}
               className="overflow-hidden"
             >
-              <p className="pb-6 md:pb-8 text-zinc-500 text-sm md:text-base leading-relaxed max-w-2xl">
+              <p className="pb-4 md:pb-6 text-zinc-500 text-sm md:text-base leading-relaxed max-w-2xl">
                 {faq.a}
               </p>
             </motion.div>
@@ -133,11 +131,11 @@ export function FAQ() {
         ))}
       </div>
 
-      <div className="mt-12 md:mt-16 text-center p-8 border border-white/5 rounded-2xl bg-white/[0.01]">
-        <p className="text-zinc-400 text-sm md:text-base mb-4">Still have questions? We respond within 24 hours.</p>
+      <div className="mt-12 md:mt-16 text-center px-8 py-10 border border-white/5 rounded-2xl bg-white/[0.01]">
+        <p className="text-zinc-400 text-sm md:text-base">Still have questions? We respond within 24 hours.</p>
         <a
           href="mailto:hello@exdevx.in"
-          className="font-mono text-xs text-primary border-b border-primary/30 pb-1 hover:border-primary transition-colors rounded-sm focus-ring"
+          className="inline-block mt-4 font-mono text-xs text-primary border-b border-primary/30 pb-1 hover:border-primary transition-colors rounded-sm focus-ring"
         >
           hello@exdevx.in
         </a>

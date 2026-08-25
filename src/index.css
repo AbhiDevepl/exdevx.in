@@ -2,6 +2,10 @@
    font request behind the CSS bundle download (render-blocking waterfall). */
 @import "tailwindcss";
 
+/* Hover styles only on devices with a real pointer — prevents sticky/tap
+   false-hover states on touch for every hover: utility in the app. */
+@custom-variant hover (@media (hover: hover) and (pointer: fine));
+
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Space Grotesk", sans-serif;
@@ -13,6 +17,11 @@
   --color-background: #09090B;   /* zinc-950 */
   --color-surface: #18181B;      /* zinc-900 — cards/nav */
   --color-surface-container: #27272A; /* zinc-800 — elevated panels */
+
+  /* Motion tokens — strong curves (built-in easings are too weak for UI) */
+  --ease-out-expo: cubic-bezier(0.23, 1, 0.32, 1);     /* entering/exiting */
+  --ease-strong-in-out: cubic-bezier(0.77, 0, 0.175, 1); /* on-screen movement */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);       /* drawer/sheet */
 }
 
 /* Light mode fallback — not primary.
@@ -37,7 +46,36 @@
 }
 
 .glass-card {
-  @apply bg-surface/70 backdrop-blur-2xl border border-white/5 hover:border-primary/30 transition-all duration-300;
+  @apply border border-white/5 bg-surface/70 backdrop-blur-2xl hover:border-primary/30 transition-[border-color] duration-200;
+}
+
+/* Button primitives — one system for every CTA.
+   Named transition properties only; press feedback via transform. */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3
+           font-mono text-xs font-bold tracking-widest focus-ring
+           transition-[background-color,border-color,color,box-shadow,transform] duration-150 ease-out;
+  }
+  .btn:active {
+    transform: scale(0.97);
+    transition-duration: 100ms;
+  }
+  .btn-lg {
+    @apply px-8 py-4;
+  }
+  .btn-primary {
+    @apply bg-primary text-zinc-950 hover:bg-primary-dark;
+  }
+  .btn-secondary {
+    @apply border border-white/10 text-zinc-200 hover:border-primary/40 hover:text-white;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:active {
+    transform: none;
+  }
 }
 
 .neon-glow {
@@ -48,8 +86,9 @@
   @apply shadow-[0_0_14px_rgba(34,211,238,0.30)];
 }
 
-/* Consistent keyboard-focus ring for all interactive elements */
-.focus-ring {
+/* Consistent keyboard-focus ring for all interactive elements.
+   Registered via @utility so it can also be @applied inside component rules (.btn). */
+@utility focus-ring {
   @apply outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
 }
 

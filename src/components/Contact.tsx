@@ -1,11 +1,9 @@
-import { useState } from 'react';
-import { motion } from 'motion/react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import {
   Mail,
   MapPin,
   Clock,
   Send,
-  MessageCircle,
 } from 'lucide-react';
 
 export default function Contact() {
@@ -15,9 +13,10 @@ export default function Contact() {
     service: '',
     message: '',
   });
+  const [opening, setOpening] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<
+    e: ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
@@ -27,8 +26,9 @@ export default function Contact() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (opening) return;
 
     const whatsappNumber = '917020401094';
 
@@ -47,7 +47,9 @@ ${formData.message}
       text
     )}`;
 
-    window.open(whatsappURL, '_blank');
+    setOpening(true);
+    window.open(whatsappURL, '_blank', 'noopener');
+    window.setTimeout(() => setOpening(false), 4000);
   };
 
   return (
@@ -60,7 +62,7 @@ ${formData.message}
           Get Started
         </div>
 
-        <h2 className="font-display text-3xl sm:text-4xl md:text-6xl font-bold leading-tight">
+        <h2 className="font-display text-3xl sm:text-4xl md:text-6xl font-bold leading-tight tracking-tight">
           Start Your Project <br className="hidden sm:block" />
           with ExDevX
         </h2>
@@ -110,7 +112,7 @@ ${formData.message}
                 </div>
 
                 <div>
-                  <div className="font-mono text-[8px] md:text-[9px] text-zinc-600 mb-1 uppercase tracking-widest">
+                  <div className="font-mono text-[10px] text-zinc-600 mb-1 uppercase tracking-widest">
                     {item.label}
                   </div>
 
@@ -120,7 +122,7 @@ ${formData.message}
                     {item.value}
                   </div>
 
-                  <div className="font-mono text-[8px] md:text-[9px] text-zinc-700 uppercase mt-0.5">
+                  <div className="font-mono text-[10px] text-zinc-700 uppercase mt-0.5">
                     {item.sub}
                   </div>
                 </div>
@@ -138,16 +140,18 @@ ${formData.message}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
               {/* NAME */}
               <div className="space-y-2">
-                <label className="font-mono text-[9px] md:text-[10px] text-zinc-500 uppercase tracking-widest">
+                <label htmlFor="contact-name" className="font-mono text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest">
                   Name
                 </label>
 
                 <input
+                  id="contact-name"
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Abhay Jadhav"
+                  autoComplete="name"
                   required
                   className="w-full bg-white/[0.03] border border-white/5 rounded-lg px-4 md:px-5 py-3 md:py-4 focus:border-primary outline-none focus-visible:ring-1 focus-visible:ring-primary/60 text-zinc-200 text-sm md:text-base transition-colors"
                 />
@@ -155,16 +159,18 @@ ${formData.message}
 
               {/* EMAIL */}
               <div className="space-y-2">
-                <label className="font-mono text-[9px] md:text-[10px] text-zinc-500 uppercase tracking-widest">
+                <label htmlFor="contact-email" className="font-mono text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest">
                   Email
                 </label>
 
                 <input
+                  id="contact-email"
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="abhay@exdevx.in"
+                  autoComplete="email"
                   required
                   className="w-full bg-white/[0.03] border border-white/5 rounded-lg px-4 md:px-5 py-3 md:py-4 focus:border-primary outline-none focus-visible:ring-1 focus-visible:ring-primary/60 text-zinc-200 text-sm md:text-base transition-colors"
                 />
@@ -173,11 +179,12 @@ ${formData.message}
 
             {/* SERVICE */}
             <div className="space-y-2">
-              <label className="font-mono text-[9px] md:text-[10px] text-zinc-500 uppercase tracking-widest">
+              <label htmlFor="contact-service" className="font-mono text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest">
                 Service
               </label>
 
               <select
+                id="contact-service"
                 name="service"
                 value={formData.service}
                 onChange={handleChange}
@@ -194,11 +201,12 @@ ${formData.message}
 
             {/* MESSAGE */}
             <div className="space-y-2">
-              <label className="font-mono text-[9px] md:text-[10px] text-zinc-500 uppercase tracking-widest">
+              <label htmlFor="contact-message" className="font-mono text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest">
                 Message
               </label>
 
               <textarea
+                id="contact-message"
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
@@ -210,20 +218,21 @@ ${formData.message}
             </div>
 
             {/* SUBMIT BUTTON */}
-            <motion.button
+            <button
               type="submit"
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 0.99 }}
-              className="w-full bg-primary hover:bg-primary-dark text-zinc-950 font-mono text-[10px] md:text-xs font-bold tracking-[0.2em] py-5 md:py-6 rounded-lg shadow-xl shadow-primary/20 flex items-center justify-center gap-3 transition-colors focus-ring"
+              disabled={opening}
+              className="btn btn-primary btn-lg w-full disabled:opacity-70 disabled:pointer-events-none"
             >
-              <Send className="w-4 h-4" />
-              GET FREE CONSULTATION
-            </motion.button>
+              <Send className="w-4 h-4" aria-hidden="true" />
+              {opening ? 'OPENING WHATSAPP…' : 'GET FREE CONSULTATION'}
+            </button>
 
             {/* INFO */}
-            <div className="text-center">
-              <span className="font-mono text-[8px] md:text-[9px] text-zinc-700 uppercase tracking-[0.2em]">
-                Response within 24 hours · No spam
+            <div className="text-center" aria-live="polite">
+              <span className="font-mono text-[10px] text-zinc-700 uppercase tracking-[0.2em]">
+                {opening
+                  ? 'If WhatsApp didn’t open, email hello@exdevx.in'
+                  : 'Response within 24 hours · No spam'}
               </span>
             </div>
 
@@ -234,7 +243,7 @@ ${formData.message}
               </div>
 
               <div className="relative flex justify-center">
-                <span className="bg-background px-4 font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-600">
+                <span className="bg-background px-4 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-600">
                   Or reach us directly
                 </span>
               </div>
@@ -242,10 +251,10 @@ ${formData.message}
 
             <a
               href="mailto:hello@exdevx.in"
-              className="w-full border border-white/10 hover:border-primary/40 text-zinc-300 hover:text-white font-mono text-[10px] md:text-xs font-bold tracking-[0.2em] py-4 md:py-5 rounded-lg flex items-center justify-center gap-3 transition-colors focus-ring"
+              className="flex items-center justify-center gap-2 font-mono text-xs text-zinc-400 hover:text-primary transition-colors focus-ring rounded-sm"
             >
-              <Mail className="w-4 h-4 text-primary" />
-              HELLO@EXDEVX.IN
+              <Mail className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
+              hello@exdevx.in
             </a>
           </form>
         </div>

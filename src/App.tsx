@@ -5,6 +5,7 @@
 
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { MotionConfig } from 'motion/react';
 import Navbar from './components/Navbar';
 import { Hero, Marquee, Services } from './components/Hero';
 import { Locations, FAQ } from './components/Locations';
@@ -53,10 +54,7 @@ function Home() {
         <Hero />
         <Marquee />
         <Services />
-        <div className="relative overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
-          <Locations />
-        </div>
+        <Locations />
         <FAQ />
         <Contact />
       </main>
@@ -70,7 +68,7 @@ function Home() {
  */
 export function AppInner() {
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <ScrollToTop />
       <div className="min-h-screen">
         <Navbar />
@@ -82,7 +80,7 @@ export function AppInner() {
         <Footer />
         <DeferredChatbot />
       </div>
-    </>
+    </MotionConfig>
   );
 }
 
